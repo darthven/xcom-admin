@@ -1,31 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <v-app>
     <router-view/>
-  </div>
+    <v-footer app class="pa-3">
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+    name: 'App',
+    data() {
+        return {
+            clipped: false,
+            drawer: true,
+            fixed: false,
+            items: [
+                {
+                    icon: 'bubble_chart',
+                    title: 'Inspire'
+                }
+            ],
+            miniVariant: false,
+            right: true,
+            rightDrawer: false,
+            title: 'Vuetify.js'
+        }
+    }
 }
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
