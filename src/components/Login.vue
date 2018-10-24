@@ -55,7 +55,8 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
-import axios from 'axios'
+
+import { AUTH_REQUEST } from '../store/actions/auth.js'
 
 export default {
     mixins: [validationMixin],
@@ -87,18 +88,10 @@ export default {
     methods: {
         submit() {
             this.$v.$touch()
-            axios
-                .post('/api/auth', {
-                    email: this.email,
-                    password: this.password
-                })
-                .then(response => {
-                    console.log(response)
-                    this.$router.push({ path: 'home' })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            const { email, password } = this
+            if (!this.$v.$invalid) {
+                this.$store.dispatch(AUTH_REQUEST, { email, password }).then(_ => this.$router.push({ path: 'home' }))
+            }
         }
     }
 }
