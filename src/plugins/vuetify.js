@@ -2,6 +2,7 @@ import Vue from 'vue'
 import {
     Vuetify,
     VApp,
+    VAlert,
     VNavigationDrawer,
     VFooter,
     VList,
@@ -11,8 +12,10 @@ import {
     VToolbar,
     VCard,
     VTooltip,
+    VDialog,
     VForm,
     VTextField,
+    VTextarea,
     transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
@@ -20,6 +23,7 @@ import 'vuetify/src/stylus/app.styl'
 Vue.use(Vuetify, {
     components: {
         VApp,
+        VAlert,
         VNavigationDrawer,
         VFooter,
         VList,
@@ -29,8 +33,10 @@ Vue.use(Vuetify, {
         VToolbar,
         VCard,
         VTooltip,
+        VDialog,
         VForm,
         VTextField,
+        VTextarea,
         transitions
     },
     theme: {

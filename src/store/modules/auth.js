@@ -11,7 +11,7 @@ const getters = {
 
 const actions = {
     [AUTH_REQUEST]: ({ commit }, user) => {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             commit(AUTH_REQUEST)
             axios
                 .post('/api/auth', {
@@ -19,14 +19,15 @@ const actions = {
                     password: user.password
                 })
                 .then(response => {
-                    console.log(response)
-                    localStorage.setItem('user-token', response.token)
-                    axios.defaults.headers.common['Authorization'] = response.token
+                    localStorage.setItem('user-token', response.data.token)
+                    // axios.defaults.headers.common['Authorization'] = response.data.token
                     commit(AUTH_SUCCESS, response)
                     resolve(response)
                 })
                 .catch(err => {
-                    console.log(err)
+                    commit(AUTH_ERROR, err)
+                    localStorage.removeItem('user-token')
+                    reject(err)
                 })
         })
     },
@@ -45,7 +46,7 @@ const mutations = {
     },
     [AUTH_SUCCESS]: (state, response) => {
         state.status = 'success'
-        state.token = response.token
+        state.token = response.data.token
         state.hasLoadedOnce = true
     },
     [AUTH_ERROR]: state => {

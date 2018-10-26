@@ -90,7 +90,7 @@ export default {
             this.$v.$touch()
             const { email, password } = this
             if (!this.$v.$invalid) {
-                this.$store.dispatch(AUTH_REQUEST, { email, password }).then(_ => this.$router.push({ path: 'home' }))
+                this.$store.dispatch(AUTH_REQUEST, { email, password }).then(() => this.$router.push({ path: 'home' }))
             }
         }
     }
