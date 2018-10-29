@@ -2,7 +2,7 @@
   <v-app id="create-banner">
     <v-content>
         <v-btn 
-            @click="show"
+            @click="open"
             color="primary"
         >{{ buttonTitle }}</v-btn>
         <v-dialog v-model="visible" max-width="500px">
@@ -10,30 +10,37 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     Create New Banner
                 </v-card-title>
+                <image-selector v-on:selectImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
-                    <v-text-field
-                        name="title"
-                        label="Title"
-                        type="text"
-                        v-model="title"
-                        :error-messages="titleErrors"
-                        :counter="128"
-                        required
-                        @input="$v.title.$touch()"
-                        @blur="$v.title.$touch()"
-                    ></v-text-field>
-                    <v-textarea
-                        name="body"
-                        label="Body"
-                        type="text"
-                        v-model="body"
-                        :error-messages="bodyErrors"
-                        :counter="4096"
-                        required
-                        @input="$v.body.$touch()"
-                        @blur="$v.body.$touch()"
-                    ></v-textarea>
+                        <v-text-field
+                            name="title"
+                            label="Title"
+                            type="text"
+                            v-model="title"
+                            :error-messages="titleErrors"
+                            :counter="128"
+                            required
+                            @input="$v.title.$touch()"
+                            @blur="$v.title.$touch()"
+                        ></v-text-field>
+                        <v-textarea
+                            name="body"
+                            label="Body"
+                            type="text"
+                            v-model="body"
+                            :error-messages="bodyErrors"
+                            :counter="4096"
+                            required
+                            @input="$v.body.$touch()"
+                            @blur="$v.body.$touch()"
+                        ></v-textarea>
+                        <products v-on:productsUpdated="onProductsUpdated"></products>
+                        <dates-range
+                            v-on:updateStartDate="onStartDateUpdated"
+                            v-on:updateEndDate="onEndDateUpdated"
+                        ></dates-range>
+                        <v-checkbox label="Private" :input-value="show"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">
@@ -52,8 +59,16 @@ import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { AUTH_REQUEST } from '../store/actions/auth.js'
 import { SHOW_DIALOG, HIDE_DIALOG } from './../store/actions/dialog'
+import DatesRange from './DatesRange'
+import ImageSelector from './ImageSelector'
+import Products from './Products'
 
 export default {
+    components: {
+        DatesRange,
+        ImageSelector,
+        Products
+    },
     mixins: [validationMixin],
     validations: {
         title: { required, minLength: minLength(1), maxLength: maxLength(128) },
@@ -65,6 +80,11 @@ export default {
     data: () => ({
         title: '',
         body: '',
+        startDate: null,
+        endDate: null,
+        image: null,
+        productIds: [],
+        show: false,
         visible: false
     }),
     computed: {
@@ -86,20 +106,31 @@ export default {
         }
     },
     methods: {
+        onStartDateUpdated(value) {
+            this.startDate = value
+        },
+        onEndDateUpdated(value) {
+            this.endDate = value
+        },
+        onImageSelected(value) {
+            this.image = value
+        },
+        onProductsUpdated(value) {
+            this.productIds = value
+        },
         create() {
             this.$v.$touch()
             const { title, body } = this
             if (!this.$v.$invalid) {
+                this.hide()
             }
         },
-        show() {
+        open() {
             this.$store.dispatch(SHOW_DIALOG).then(res => (this.visible = res))
         },
         hide() {
             this.$store.dispatch(HIDE_DIALOG).then(res => {
                 this.visible = res
-                this.title = ''
-                this.body = ''
             })
         }
     }

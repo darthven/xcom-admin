@@ -2,7 +2,7 @@
     <v-app id="upload-dialog">
         <v-content>
             <v-btn 
-                @click="show"
+                @click="open"
                 color="primary"
             >{{ title }}</v-btn>
             <v-dialog v-model="visible" max-width="500px">
@@ -43,7 +43,7 @@ export default {
         fileUploaded: false
     }),
     methods: {
-        show() {
+        open() {
             this.$store.dispatch(SHOW_DIALOG).then(res => (this.visible = res))
         },
         hide() {
