@@ -3,6 +3,7 @@ import {
     Vuetify,
     VApp,
     VAlert,
+    VAvatar,
     VChip,
     VCheckbox,
     VCombobox,
@@ -29,6 +30,7 @@ Vue.use(Vuetify, {
     components: {
         VApp,
         VAlert,
+        VAvatar,
         VChip,
         VCheckbox,
         VCombobox,

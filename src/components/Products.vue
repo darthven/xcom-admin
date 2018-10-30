@@ -13,8 +13,7 @@
             <template slot="selection" slot-scope="data">
                 <v-chip
                     :selected="data.selected"
-                    close
-                   
+                    close                   
                     @input="removeProduct(data.item)"
                 >
                     <strong>{{ data.item }}</strong>
@@ -26,11 +25,11 @@
 
 <script>
 export default {
-    data () {
-      return {
-        products: [1, 2, 3, 4, 5],
-        selectedProducts: []
-      }
+    data() {
+        return {
+            products: [1, 2, 3, 4, 5],
+            selectedProducts: []
+        }
     },
     methods: {
         selectProduct() {

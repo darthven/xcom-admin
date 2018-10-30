@@ -5,7 +5,7 @@
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
+              <v-toolbar dark color="blue-grey">
                 <v-toolbar-title>Ecom Admin</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
@@ -19,6 +19,7 @@
                     v-model="email"
                     :error-messages="emailErrors"
                     :counter="25"
+                    color="blue-grey"
                     required
                     @input="$v.email.$touch()"
                     @blur="$v.email.$touch()"
@@ -32,6 +33,7 @@
                     v-model="password"
                     :error-messages="passwordErrors"
                     :counter="30"
+                    color="blue-grey"
                     required
                     @input="$v.password.$touch()"
                     @blur="$v.password.$touch()"
@@ -40,7 +42,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="submit" color="primary">
+                <v-btn @click="submit" flat>
                   Login           
                 </v-btn>                    
               </v-card-actions>

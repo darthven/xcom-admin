@@ -7,15 +7,20 @@
       app
       clipped-right
     >
-      <v-toolbar-title>Admin Panel</v-toolbar-title>
-      <v-spacer></v-spacer>
+        <v-toolbar-title>ADMIN PANEL</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-sm-and-down">
+            <create-banner buttonTitle="Create New Banner"></create-banner>
+            <upload-file buttonTitle="Upload discounts (CSV)" fileType="text/csv"></upload-file>
+            <logout buttonTitle="Log out"></logout>
+        </v-toolbar-items>
     </v-toolbar>
     <v-content>
         <v-container fluid fill-height>
-            <create-banner buttonTitle="Create New Banner"/>
-            <upload-file title="Upload discounts (CSV)" fileType="text/csv"/>
+            
             <v-layout justify-center align-center>  
-                <banner title="Amazing Banner"></banner>
+               
+                <banner-list></banner-list>
             </v-layout>
         </v-container>
     </v-content>
@@ -30,13 +35,16 @@
 <script>
 import CreateBanner from './CreateBanner'
 import UploadFile from './UploadFile'
-import Banner from './Banner'
+import BannerList from './BannerList'
+import Logout from './Logout'
+import { BANNERS_REQUEST } from './../store/actions/banner'
 
 export default {
     components: {
         CreateBanner,
         UploadFile,
-        Banner
+        Logout,
+        BannerList
     },
     data: () => ({}),
     props: {

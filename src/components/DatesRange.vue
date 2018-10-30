@@ -49,22 +49,22 @@
     </v-container>
 </template>
 <script>
-    export default {
-        data: () => ({
-            startDate: new Date().toISOString().substr(0, 10),
-            endDate: new Date().toISOString().substr(0, 10),
-            start: false,
-            end: false
-        }),
-        methods: {
-            updateStartDate() {
-                this.start = false
-                this.$emit('updateStartDate', this.startDate)
-            },
-            updateEndDate() {
-                this.end = false
-                this.$emit('updateEndDate', this.endDate)
-            }
+export default {
+    data: () => ({
+        startDate: new Date().toISOString().substr(0, 10),
+        endDate: new Date().toISOString().substr(0, 10),
+        start: false,
+        end: false
+    }),
+    methods: {
+        updateStartDate() {
+            this.start = false
+            this.$emit('updateStartDate', this.startDate)
+        },
+        updateEndDate() {
+            this.end = false
+            this.$emit('updateEndDate', this.endDate)
         }
     }
+}
 </script>

@@ -4,6 +4,9 @@ import {
     BANNER_REQUEST,
     BANNER_SUCCESS,
     BANNER_ERROR,
+    BANNERS_REQUEST,
+    BANNERS_SUCCESS,
+    BANNERS_ERROR,
     CREATE_BANNER_REQUEST,
     CREATE_BANNER_SUCCESS,
     CREATE_BANNER_ERROR,
@@ -27,7 +30,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(BANNER_REQUEST)
             axios
-                .post(`/api/banner/${bannerId}`)
+                .get(`/api/banner/${bannerId}`)
                 .then(response => {
                     commit(BANNER_SUCCESS, response)
                     resolve(response)
@@ -38,13 +41,26 @@ const actions = {
                 })
         })
     },
+    [BANNERS_REQUEST]: ({ commit }) => {
+        return new Promise((resolve, reject) => {
+            commit(BANNER_REQUEST)
+            axios
+                .get(`/api/banner`)
+                .then(response => {
+                    commit(BANNERS_SUCCESS, response)
+                    resolve(response)
+                })
+                .catch(err => {
+                    commit(BANNERS_ERROR, err)
+                    reject(err)
+                })
+        })
+    },
     [CREATE_BANNER_REQUEST]: ({ commit }, banner) => {
         return new Promise((resolve, reject) => {
             commit(CREATE_BANNER_REQUEST)
             axios
-                .post('/api/banner', {
-                    ...banner
-                })
+                .post('/api/banner', banner)
                 .then(response => {
                     commit(CREATE_BANNER_SUCCESS, response)
                     resolve(response)
@@ -95,7 +111,17 @@ const mutations = {
     },
     [BANNER_SUCCESS]: (state, response) => {
         state.bannerStatus = 'success'
-        state.selectedBanner = response.data.banner
+        state.selectedBanner = response.data
+    },
+    [BANNERS_ERROR]: state => {
+        state.bannerStatus = 'error'
+    },
+    [BANNERS_REQUEST]: state => {
+        state.bannerStatus = 'loading'
+    },
+    [BANNERS_SUCCESS]: (state, response) => {
+        state.bannerStatus = 'success'
+        state.banners = response.data
     },
     [BANNER_ERROR]: state => {
         state.bannerStatus = 'error'
@@ -105,7 +131,7 @@ const mutations = {
     },
     [CREATE_BANNER_SUCCESS]: (state, response) => {
         state.bannerStatus = 'success'
-        state.banners = [...state.banners, response.data.banner]
+        state.banners.push(response.data)
     },
     [CREATE_BANNER_ERROR]: state => {
         state.bannerStatus = 'error'
@@ -115,9 +141,9 @@ const mutations = {
     },
     [UPDATE_BANNER_SUCCESS]: (state, response) => {
         state.bannerStatus = 'success'
-        const updatedBanner = response.data.banner
-        state.selectedBanner = updatedBanner
-        state.banners = state.banners.map(ban => (ban.title === updatedBanner.title ? updatedBanner : ban))
+        const updatedBanner = response.data
+        const index = state.banners.findIndex(ban => ban._id === updatedBanner._id)
+        state.banners[index] = updatedBanner
     },
     [UPDATE_BANNER_ERROR]: state => {
         state.bannerStatus = 'error'
@@ -127,7 +153,8 @@ const mutations = {
     },
     [DELETE_BANNER_SUCCESS]: (state, response) => {
         state.bannerStatus = 'success'
-        state.banners = state.banners.splice(state.banners.indexOf(response.data.banner), 1)
+        const index = state.banners.findIndex(ban => ban._id === response.data.id)
+        state.banners.splice(index, 1)
     },
     [DELETE_BANNER_ERROR]: state => {
         state.bannerStatus = 'error'
