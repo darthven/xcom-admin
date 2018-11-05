@@ -8,11 +8,16 @@ const state = {
 }
 
 const actions = {
-    [IMAGE_UPLOAD_REQUEST]: ({ commit }, fileData) => {
+    [IMAGE_UPLOAD_REQUEST]: ({ commit }, { bannerId, image }) => {
         return new Promise((resolve, reject) => {
             commit(IMAGE_UPLOAD_REQUEST)
+            console.log('FORM DATA', image)
             axios
-                .post('/api', fileData)
+                .post(`/api/banner/${bannerId}/image`, image, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
                 .then(response => {
                     commit(IMAGE_UPLOAD_SUCCESS, response)
                     resolve(response)

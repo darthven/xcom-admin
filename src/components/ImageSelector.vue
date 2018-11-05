@@ -1,7 +1,7 @@
 <template>
     <v-container>
-        <img id="output"/>
-        <input type="file" @change="selectImage($event)"/>    
+        <img v-if="url" :src="url"/>
+        <input type="file" accept="image/*" @change="selectImage($event)"/>    
     </v-container>
 </template>
 
@@ -9,16 +9,17 @@
 import { IMAGE_UPLOAD_REQUEST } from './../store/actions/uploadImage'
 
 export default {
+    data: () => ({
+        url: null
+    }),
     methods: {
         selectImage(event) {
-            const file = event.target.files[0]
+            const image = event.target.files[0]
             const formData = new FormData()
-            formData.append('file', this.file)
-            this.$store.dispatch(IMAGE_UPLOAD_REQUEST, formData).then(res => {
-                const output = document.getElementById('output')
-                output.src = URL.createObjectURL(file)
-                this.$emit('selectImage', file)
-            })
+            this.url = URL.createObjectURL(image)
+            formData.append('file', image)
+            console.log('Formdata', formData)
+            this.$emit('selectedImage', formData)
         }
     }
 }

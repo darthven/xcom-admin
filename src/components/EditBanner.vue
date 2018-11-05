@@ -41,7 +41,7 @@
                             v-on:updateStartDate="onStartDateUpdated"
                             v-on:updateEndDate="onEndDateUpdated"
                         ></dates-range>
-                        <v-checkbox :value="show" :label="$vuetify.t('$vuetify.private')" v-model="show"></v-checkbox>
+                        <v-checkbox :value="show" :label="$vuetify.t('$vuetify.public')" v-model="show"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">

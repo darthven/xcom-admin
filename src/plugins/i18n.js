@@ -29,7 +29,7 @@ const messages = {
             createBanner: 'Создать акцию',
             fileSuccess: 'Файл акций был успешно загружен',
             close: 'Закрыть',
-            private: 'Закрытый доступ',
+            public: 'Открытый доступ',
             selectProducts: 'Выбрать товары',
             startDate: 'Начало действия',
             endDate: 'Окончание действия'

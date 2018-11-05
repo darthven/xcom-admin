@@ -75,9 +75,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(UPDATE_BANNER_REQUEST)
             axios
-                .put(`/api/banner/${bannerId}`, {
-                    ...banner
-                })
+                .put(`/api/banner/${bannerId}`, banner)
                 .then(response => {
                     commit(UPDATE_BANNER_SUCCESS, response)
                     resolve(response)

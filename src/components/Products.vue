@@ -4,11 +4,13 @@
             v-model="selectedProducts"
             :items="products"
             label="Select products"
+            name="selectedProducts"
+            :error-messages="productsErrors"
             chips
             clearable
             solo
             multiple
-            @blur="selectProduct()"
+            @blur="selectProduct"
         >
             <template slot="selection" slot-scope="data">
                 <v-chip
@@ -24,11 +26,21 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
+
 export default {
     data() {
         return {
             products: [1, 2, 3, 4, 5],
             selectedProducts: []
+        }
+    },
+    computed: {
+        productsErrors() {
+            const errors = []
+            this.selectedProducts.length === 0 && errors.push('Products are required')
+            return errors
         }
     },
     methods: {

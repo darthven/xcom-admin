@@ -9,7 +9,7 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     Create New Banner
                 </v-card-title>
-                <image-selector v-on:selectImage="onImageSelected"></image-selector>
+                <image-selector :url="imageUrl" v-on:selectedImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -39,7 +39,7 @@
                             v-on:updateStartDate="onStartDateUpdated"
                             v-on:updateEndDate="onEndDateUpdated"
                             ></dates-range>
-                        <v-checkbox label="Private" input-value="show"></v-checkbox>
+                        <v-checkbox label="Public" v-model="show"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">
@@ -60,6 +60,7 @@ import { CREATE_BANNER_REQUEST } from './../store/actions/banner'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
+import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage';
 
 export default {
     components: {
@@ -81,8 +82,9 @@ export default {
         startDate: null,
         endDate: null,
         image: null,
+        imageUrl: '',
         productIds: [],
-        show: false,
+        show: true,
         visible: false
     }),
     computed: {
@@ -111,6 +113,7 @@ export default {
             this.endDate = value
         },
         onImageSelected(value) {
+            console.log('VALUE', value)
             this.image = value
         },
         onProductsUpdated(value) {
@@ -118,7 +121,7 @@ export default {
         },
         create() {
             this.$v.$touch()
-            const { title, body, startDate, endDate, show } = this
+            const { title, image, body, startDate, endDate, show } = this
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(CREATE_BANNER_REQUEST, {
@@ -129,7 +132,14 @@ export default {
                         show
                     })
                     .then(res => {
-                        this.visible = false
+                        console.log('IMAGE', image)
+                        this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
+                            .then(res => {
+                                this.imageUrl = res.data.url
+                            })
+                            .then(res => {
+                                this.visible = false
+                            })
                     })
             }
         }

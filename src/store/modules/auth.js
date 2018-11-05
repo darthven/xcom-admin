@@ -19,8 +19,6 @@ const actions = {
                     password: user.password
                 })
                 .then(response => {
-                    localStorage.setItem('user-token', response.data.token)
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user-token')
                     commit(AUTH_SUCCESS, response)
                     resolve(response)
                 })
@@ -47,6 +45,8 @@ const mutations = {
     },
     [AUTH_SUCCESS]: (state, response) => {
         state.status = 'success'
+        localStorage.setItem('user-token', response.data.token)
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user-token')
         state.token = 'Bearer ' + response.data.token
         state.hasLoadedOnce = true
     },

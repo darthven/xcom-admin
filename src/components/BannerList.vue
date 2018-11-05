@@ -3,14 +3,15 @@
         <div v-if="banners.length > 0">
             <banner
                 v-for="(item, index) in banners"
-                v-bind:item="item"
-                v-bind:index="index"
-                v-bind:key="item._id"
+                :item="item"
+                :index="index"
+                :key="item._id"
                 :_id="item._id"
                 :title="item.title"
                 :body="item.body"
                 :startDate="new Date(item.startDate)"
                 :endDate="new Date(item.endDate)"
+                :productIds="item.productIds"
                 :show="item.show"
                 v-on:bannersUpdated="onBannersUpdated"
             ></banner>
