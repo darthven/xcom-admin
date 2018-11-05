@@ -1,4 +1,7 @@
 import Vue from 'vue'
+
+import i18n from './i18n'
+
 import {
     Vuetify,
     VApp,
@@ -60,5 +63,8 @@ Vue.use(Vuetify, {
         success: '#4CAF50',
         warning: '#FFC107'
     },
-    iconfont: 'md'
+    iconfont: 'md',
+    lang: {
+        t: (key, ...params) => i18n.t(key, params)
+    }
 })

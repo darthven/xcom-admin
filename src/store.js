@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 
 import auth from './store/modules/auth'
 import banner from './store/modules/banner'
-import dialog from './store/modules/dialog'
 import uploadDiscount from './store/modules/uploadDiscount'
+import uploadImage from './store/modules/uploadImage'
 
 Vue.use(Vuex)
 
@@ -14,8 +14,8 @@ export default new Vuex.Store({
     modules: {
         auth,
         banner,
-        dialog,
-        uploadDiscount
+        uploadDiscount,
+        uploadImage
     },
     strict: debug
 })

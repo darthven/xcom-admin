@@ -17,9 +17,7 @@
     </v-toolbar>
     <v-content>
         <v-container fluid fill-height>
-            
             <v-layout justify-center align-center>  
-               
                 <banner-list></banner-list>
             </v-layout>
         </v-container>

@@ -8,8 +8,8 @@
                 {{ body }}
             </v-card-text>
             <v-card-actions>
+                <edit-banner v-on:bannerUpdated="onBannerUpdated" buttonTitle="Edit Banner" :bannerId="_id"/>
                 <delete-banner buttonTitle="Delete Banner" :bannerId="_id"/>
-                <create-banner buttonTitle="Update Banner" :bannerId="_id"/>
             </v-card-actions>
         </v-card>
     </v-container>
@@ -17,12 +17,13 @@
 
 <script>
 import DeleteBanner from './DeleteBanner'
-import CreateBanner from './CreateBanner'
+import EditBanner from './EditBanner'
+import { BANNER_REQUEST } from '../store/actions/banner'
 
 export default {
     components: {
         DeleteBanner,
-        CreateBanner
+        EditBanner
     },
     props: {
         _id: String,
@@ -31,6 +32,11 @@ export default {
         startDate: Date,
         endDate: Date,
         show: Boolean
+    },
+    methods: {
+        onBannerUpdated(val) {
+            this.$emit('bannersUpdated')
+        }
     }
 }
 </script>

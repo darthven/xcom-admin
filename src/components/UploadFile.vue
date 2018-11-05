@@ -1,6 +1,6 @@
 <template>
     <v-btn 
-        @click="open"
+        @click="visible = true"
         flat
         >
         {{ buttonTitle }}
@@ -10,14 +10,11 @@
                     Upload File
                 </v-card-title>
                 <v-card-actions class="pa-3">
-                    <input type="file" @change="selectFile($event)"/>
-                    <v-btn color="primary" :disabled="!fileSelected || fileUploaded" flat @click="uploadFile">Upload</v-btn>
-                    <v-btn color="primary" flat @click="hide">Close</v-btn>
+                    <input type="file" accept="text/csv" @change="selectFile($event)"/>
+                    <v-btn color="primary" :disabled="!file || fileUploaded" flat @click="uploadFile">Upload</v-btn>
+                    <v-btn color="primary" flat @click="visible = false">Close</v-btn>
                 </v-card-actions>
-                <v-alert transition="scale-transition" :value="wrongFileType" type="error">
-                    Wrong file type!
-                </v-alert>
-                <v-alert transition="scale-transition" :value="fileSelected && fileUploaded" type="success">
+                <v-alert transition="scale-transition" :value="file && fileUploaded" type="success">
                     File was successfully uploaded
                 </v-alert>
             </v-card>
@@ -26,7 +23,6 @@
 </template>
 
 <script>
-import { SHOW_DIALOG, HIDE_DIALOG } from './../store/actions/dialog'
 import { DISCOUNT_UPLOAD_REQUEST } from './../store/actions/uploadDiscount.js'
 
 export default {
@@ -36,38 +32,17 @@ export default {
     },
     data: () => ({
         visible: false,
-        fileSelected: false,
-        wrongFileType: false,
+        file: null,
         fileUploaded: false
     }),
     methods: {
-        open() {
-            this.$store.dispatch(SHOW_DIALOG).then(res => (this.visible = res))
-        },
-        hide() {
-            this.$store.dispatch(HIDE_DIALOG).then(res => {
-                this.visible = res
-                this.fileSelected = false
-                this.wrongFileType = false
-                this.fileUploaded = false
-            })
-        },
         selectFile(event) {
-            const file = event.target.files[0]
-            if (file.type === this.fileType) {
-                if (this.wrongFileType) {
-                    this.wrongFileType = false
-                }
-                this.fileSelected = true
-            } else {
-                if (this.fileSelected) {
-                    this.fileSelected = false
-                }
-                this.wrongFileType = true
-            }
+            this.file = event.target.files[0]
         },
         uploadFile() {
-            this.$store.dispatch(DISCOUNT_UPLOAD_REQUEST, { x: 23 }).then(res => {
+            const formData = new FormData()
+            formData.append('file', this.file)
+            this.$store.dispatch(DISCOUNT_UPLOAD_REQUEST, formData).then(res => {
                 this.fileUploaded = true
             })
         }

@@ -71,11 +71,11 @@ const actions = {
                 })
         })
     },
-    [UPDATE_BANNER_REQUEST]: ({ commit }, banner) => {
+    [UPDATE_BANNER_REQUEST]: ({ commit }, { bannerId, banner }) => {
         return new Promise((resolve, reject) => {
             commit(UPDATE_BANNER_REQUEST)
             axios
-                .put('/api/banner', {
+                .put(`/api/banner/${bannerId}`, {
                     ...banner
                 })
                 .then(response => {
@@ -142,6 +142,7 @@ const mutations = {
     [UPDATE_BANNER_SUCCESS]: (state, response) => {
         state.bannerStatus = 'success'
         const updatedBanner = response.data
+        console.log(updatedBanner)
         const index = state.banners.findIndex(ban => ban._id === updatedBanner._id)
         state.banners[index] = updatedBanner
     },
@@ -152,8 +153,10 @@ const mutations = {
         state.bannerStatus = 'loading'
     },
     [DELETE_BANNER_SUCCESS]: (state, response) => {
+        console.log(response.data)
         state.bannerStatus = 'success'
-        const index = state.banners.findIndex(ban => ban._id === response.data.id)
+        const index = state.banners.findIndex(ban => ban._id === response.data)
+        console.log(state.banners, response.data, index)
         state.banners.splice(index, 1)
     },
     [DELETE_BANNER_ERROR]: state => {

@@ -9,7 +9,10 @@
                 :_id="item._id"
                 :title="item.title"
                 :body="item.body"
+                :startDate="new Date(item.startDate)"
+                :endDate="new Date(item.endDate)"
                 :show="item.show"
+                v-on:bannersUpdated="onBannersUpdated"
             ></banner>
         </div>
         <div v-else class="empty">
@@ -27,20 +30,27 @@ export default {
         Banner
     },
     created() {
-        this.$store.dispatch(BANNERS_REQUEST).then(res => (this.banners = res.data))
+        this.$store.dispatch(BANNERS_REQUEST)
     },
-    data: () => ({
-        banners: []
-    })
+    computed: {
+        banners() {
+            return this.$store.getters.banners
+        }
+    },
+    methods: {
+        onBannersUpdated() {
+            this.$store.dispatch(BANNERS_REQUEST)
+        }
+    }
 }
 </script>
 
 <style scoped>
-    .empty {
-        height: inherit;
-        width: inherit;
-        justify-content: center;
-        text-align: center;
-        font-size: 60px;
-    }
+.empty {
+    height: inherit;
+    width: inherit;
+    justify-content: center;
+    text-align: center;
+    font-size: 60px;
+}
 </style>

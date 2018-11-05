@@ -1,7 +1,7 @@
 <template>
     <v-btn 
         flat
-        @click="open"
+        @click="visible = true"
         >
         {{ buttonTitle }}
         <v-dialog v-model="visible" max-width="500px">
@@ -44,7 +44,7 @@
                 </v-card-text>
                 <v-card-actions class="pa-3">
                     <v-btn color="primary" flat @click="create">Create</v-btn>
-                    <v-btn color="primary" flat @click="hide">Close</v-btn>
+                    <v-btn color="primary" flat @click="visible = false">Close</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -56,7 +56,6 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { AUTH_REQUEST } from '../store/actions/auth'
-import { SHOW_DIALOG, HIDE_DIALOG } from './../store/actions/dialog'
 import { CREATE_BANNER_REQUEST } from './../store/actions/banner'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
@@ -119,27 +118,20 @@ export default {
         },
         create() {
             this.$v.$touch()
-            const { title, body, show } = this
+            const { title, body, startDate, endDate, show } = this
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(CREATE_BANNER_REQUEST, {
                         title,
                         body,
+                        startDate,
+                        endDate,
                         show
                     })
                     .then(res => {
-                        console.log('Created')
-                        this.hide()
+                        this.visible = false
                     })
             }
-        },
-        open() {
-            this.$store.dispatch(SHOW_DIALOG).then(res => (this.visible = res))
-        },
-        hide() {
-            this.$store.dispatch(HIDE_DIALOG).then(res => {
-                this.visible = res
-            })
         }
     }
 }

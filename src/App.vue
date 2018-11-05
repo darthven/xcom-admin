@@ -9,13 +9,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'App',
-    created() {
-        if (!this.$store.getters.isAuthenticated) {
-            this.$router.push('/')
-        }
-    },
     data() {
         return {}
     }

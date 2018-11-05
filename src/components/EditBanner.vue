@@ -4,17 +4,17 @@
         @click="open"
         >
         {{ buttonTitle }}
-        <v-dialog v-model="visible" max-width="500px">
+        <v-dialog v-model="visible" max-width="550px">
             <v-card>
                 <v-card-title class="headline grey lighten-2" primary-title>
-                    Create New Banner
+                    {{ $vuetify.t('$vuetify.updateBannerTitle') }}
                 </v-card-title>
                 <image-selector v-on:selectImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
                             name="title"
-                            label="Title"
+                            :label="$vuetify.t('$vuetify.title')"
                             type="text"
                             v-model="title"
                             :error-messages="titleErrors"
@@ -22,10 +22,10 @@
                             required
                             @input="$v.title.$touch()"
                             @blur="$v.title.$touch()"
-                            ></v-text-field>
+                            >{{ title }}</v-text-field>
                         <v-textarea
                             name="body"
-                            label="Body"
+                            :label="$vuetify.t('$vuetify.body')"
                             type="text"
                             v-model="body"
                             :error-messages="bodyErrors"
@@ -33,18 +33,20 @@
                             required
                             @input="$v.body.$touch()"
                             @blur="$v.body.$touch()"
-                            ></v-textarea>
-                        <products v-on:productsUpdated="onProductsUpdated"></products>
+                            > {{ body }}</v-textarea>
+                        <products :selectedProducts="productIds" v-on:productsUpdated="onProductsUpdated"></products>
                         <dates-range
+                            :startDate="startDate"
+                            :endDate="endDate"
                             v-on:updateStartDate="onStartDateUpdated"
                             v-on:updateEndDate="onEndDateUpdated"
-                            ></dates-range>
-                        <v-checkbox label="Private" input-value="show"></v-checkbox>
+                        ></dates-range>
+                        <v-checkbox :value="show" :label="$vuetify.t('$vuetify.private')" v-model="show"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">
-                    <v-btn color="primary" flat @click="create">Create</v-btn>
-                    <v-btn color="primary" flat @click="hide">Close</v-btn>
+                    <v-btn color="primary" flat @click="update">{{ $vuetify.t('$vuetify.update') }}</v-btn>
+                    <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.close') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -56,8 +58,12 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { AUTH_REQUEST } from '../store/actions/auth'
-import { SHOW_DIALOG, HIDE_DIALOG } from './../store/actions/dialog'
-import { CREATE_BANNER_REQUEST } from './../store/actions/banner'
+import {
+    CREATE_BANNER_REQUEST,
+    BANNERS_REQUEST,
+    BANNER_REQUEST,
+    UPDATE_BANNER_REQUEST
+} from './../store/actions/banner'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
@@ -71,9 +77,13 @@ export default {
     mixins: [validationMixin],
     validations: {
         title: { required, minLength: minLength(1), maxLength: maxLength(128) },
-        body: { required, minLength: minLength(1), maxLength: maxLength(4096) }
+        body: { required, minLength: minLength(1), maxLength: maxLength(4096) },
+        startDate: { required },
+        endDate: { required },
+        productIds: { required }
     },
     props: {
+        bannerId: String,
         buttonTitle: String
     },
     data: () => ({
@@ -81,8 +91,8 @@ export default {
         body: '',
         startDate: null,
         endDate: null,
-        image: null,
         productIds: [],
+        image: null,
         show: false,
         visible: false
     }),
@@ -117,29 +127,38 @@ export default {
         onProductsUpdated(value) {
             this.productIds = value
         },
-        create() {
-            this.$v.$touch()
-            const { title, body, show } = this
+        open() {
+            this.$store.dispatch(BANNER_REQUEST, this.bannerId).then(res => {
+                const { title, body, startDate, endDate, productIds, show } = res.data
+                this.title = title
+                this.body = body
+                this.startDate = startDate
+                this.endDate = endDate
+                this.productIds = productIds
+                this.show = show
+                this.visible = true
+            })
+        },
+        update() {
+            const { title, body, startDate, endDate, productIds, show } = this
             if (!this.$v.$invalid) {
                 this.$store
-                    .dispatch(CREATE_BANNER_REQUEST, {
-                        title,
-                        body,
-                        show
+                    .dispatch(UPDATE_BANNER_REQUEST, {
+                        bannerId: this.bannerId,
+                        banner: {
+                            title,
+                            body,
+                            startDate,
+                            endDate,
+                            productIds,
+                            show
+                        }
                     })
                     .then(res => {
-                        console.log('Created')
-                        this.hide()
+                        this.$emit('bannerUpdated')
+                        this.visible = false
                     })
             }
-        },
-        open() {
-            this.$store.dispatch(SHOW_DIALOG).then(res => (this.visible = res))
-        },
-        hide() {
-            this.$store.dispatch(HIDE_DIALOG).then(res => {
-                this.visible = res
-            })
         }
     }
 }

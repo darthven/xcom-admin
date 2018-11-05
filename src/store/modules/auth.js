@@ -20,7 +20,7 @@ const actions = {
                 })
                 .then(response => {
                     localStorage.setItem('user-token', response.data.token)
-                    // axios.defaults.headers.common['Authorization'] = response.data.token
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user-token')
                     commit(AUTH_SUCCESS, response)
                     resolve(response)
                 })
@@ -35,6 +35,7 @@ const actions = {
         return new Promise(resolve => {
             commit(AUTH_LOGOUT)
             localStorage.removeItem('user-token')
+            delete axios.defaults.headers.common['Authorization']
             resolve()
         })
     }
@@ -46,7 +47,7 @@ const mutations = {
     },
     [AUTH_SUCCESS]: (state, response) => {
         state.status = 'success'
-        state.token = response.data.token
+        state.token = 'Bearer ' + response.data.token
         state.hasLoadedOnce = true
     },
     [AUTH_ERROR]: state => {

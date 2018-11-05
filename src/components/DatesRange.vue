@@ -51,8 +51,8 @@
 <script>
 export default {
     data: () => ({
-        startDate: new Date().toISOString().substr(0, 10),
-        endDate: new Date().toISOString().substr(0, 10),
+        startDate: null,
+        endDate: null,
         start: false,
         end: false
     }),

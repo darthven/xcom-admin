@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { DISCOUNT_UPLOAD_REQUEST, DISCOUNT_UPLOAD_SUCCESS, DISCOUNT_UPLOAD_ERROR } from '../actions/uploadDiscount'
+import { IMAGE_UPLOAD_REQUEST, IMAGE_UPLOAD_SUCCESS, IMAGE_UPLOAD_ERROR } from '../actions/uploadImage'
 
 const state = {
     uploadStatus: '',
@@ -8,17 +8,17 @@ const state = {
 }
 
 const actions = {
-    [DISCOUNT_UPLOAD_REQUEST]: ({ commit }, fileData) => {
+    [IMAGE_UPLOAD_REQUEST]: ({ commit }, fileData) => {
         return new Promise((resolve, reject) => {
-            commit(DISCOUNT_UPLOAD_REQUEST)
+            commit(IMAGE_UPLOAD_REQUEST)
             axios
                 .post('/api', fileData)
                 .then(response => {
-                    commit(DISCOUNT_UPLOAD_SUCCESS, response)
+                    commit(IMAGE_UPLOAD_SUCCESS, response)
                     resolve(response)
                 })
                 .catch(error => {
-                    commit(DISCOUNT_UPLOAD_ERROR, error)
+                    commit(IMAGE_UPLOAD_ERROR, error)
                     reject(error)
                 })
         })
@@ -26,14 +26,14 @@ const actions = {
 }
 
 const mutations = {
-    [DISCOUNT_UPLOAD_REQUEST]: state => {
+    [IMAGE_UPLOAD_REQUEST]: state => {
         state.uploadStatus = 'loading'
     },
-    [DISCOUNT_UPLOAD_SUCCESS]: (state, response) => {
+    [IMAGE_UPLOAD_SUCCESS]: (state, response) => {
         state.uploadStatus = 'success'
         state.uploadCode = response.code
     },
-    [DISCOUNT_UPLOAD_ERROR]: (state, error) => {
+    [IMAGE_UPLOAD_ERROR]: (state, error) => {
         state.uploadStatus = 'error'
         state.uploadCode = error.code
     }
