@@ -121,12 +121,13 @@ export default {
         },
         create() {
             this.$v.$touch()
-            const { title, image, body, startDate, endDate, show } = this
+            const { title, image, body, productIds, startDate, endDate, show } = this
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(CREATE_BANNER_REQUEST, {
                         title,
                         body,
+                        productIds,
                         startDate,
                         endDate,
                         show
@@ -136,6 +137,7 @@ export default {
                         this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
                             .then(res => {
                                 this.imageUrl = res.data.url
+                                console.log('URL', this.imageUrl)
                             })
                             .then(res => {
                                 this.visible = false
