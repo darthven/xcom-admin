@@ -12,7 +12,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(DISCOUNT_UPLOAD_REQUEST)
             axios
-                .post('/api', fileData)
+                .get('/api', fileData)
                 .then(response => {
                     commit(DISCOUNT_UPLOAD_SUCCESS, response)
                     resolve(response)

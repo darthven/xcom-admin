@@ -9,7 +9,7 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     {{ $vuetify.t('$vuetify.updateBannerTitle') }}
                 </v-card-title>
-                <image-selector v-on:selectImage="onImageSelected"></image-selector>
+                <image-selector :url="image" v-on:selectImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -129,13 +129,15 @@ export default {
         },
         open() {
             this.$store.dispatch(BANNER_REQUEST, this.bannerId).then(res => {
-                const { title, body, startDate, endDate, productIds, show } = res.data
+                console.log(res.data)
+                const { title, body, image, startDate, endDate, productIds, show } = res.data
                 this.title = title
                 this.body = body
                 this.startDate = startDate
                 this.endDate = endDate
                 this.productIds = productIds
                 this.show = show
+                this.image = image
                 this.visible = true
             })
         },

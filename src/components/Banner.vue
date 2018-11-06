@@ -19,9 +19,6 @@
                         <strong>{{ id }}</strong>
                     </v-chip>                   
                 </v-card-text>               
-                <v-card-text>
-                    {{ startDate }} - {{ endDate }}
-                </v-card-text>
             </template>
             <v-card-actions>
                 <edit-banner v-on:bannerUpdated="onBannerUpdated" buttonTitle="Edit Banner" :bannerId="_id"/>

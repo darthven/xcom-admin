@@ -121,7 +121,7 @@ export default {
         },
         create() {
             this.$v.$touch()
-            const { title, image, body, startDate, endDate, show } = this
+            const { title, image, body, productIds, startDate, endDate, show } = this
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(CREATE_BANNER_REQUEST, {
@@ -129,6 +129,7 @@ export default {
                         body,
                         startDate,
                         endDate,
+                        productIds,
                         show
                     })
                     .then(res => {
