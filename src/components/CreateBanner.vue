@@ -130,7 +130,6 @@ export default {
                         productIds,
                         startDate,
                         endDate,
-                        productIds,
                         show
                     })
                     .then(res => {

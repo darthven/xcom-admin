@@ -9,7 +9,7 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     {{ $vuetify.t('$vuetify.updateBannerTitle') }}
                 </v-card-title>
-                <image-selector :url="image" v-on:selectImage="onImageSelected"></image-selector>
+                <image-selector :url="imageUrl" v-on:selectImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -94,6 +94,7 @@ export default {
         endDate: null,
         productIds: [],
         image: null,
+        imageUrl: '',
         show: false,
         visible: false
     }),
