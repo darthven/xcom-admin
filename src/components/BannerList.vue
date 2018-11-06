@@ -9,6 +9,7 @@
                 :_id="item._id"
                 :title="item.title"
                 :body="item.body"
+                :image="item.image"
                 :startDate="new Date(item.startDate)"
                 :endDate="new Date(item.endDate)"
                 :productIds="item.productIds"
