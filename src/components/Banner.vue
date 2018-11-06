@@ -10,7 +10,7 @@
                 </div>
             </v-card-title>
             <template v-if="!hidden">
-                <img v-if="image" :src="image"/>
+                <img class="imageClass" v-if="image" :src="image"/>
                 <v-card-text>
                     {{ body }}
                 </v-card-text>
@@ -63,3 +63,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .imageClass {
+        padding-top: 20px;
+        padding-left: 16px;
+    }
+</style>
+
