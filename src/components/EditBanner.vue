@@ -142,7 +142,7 @@ export default {
             })
         },
         update() {
-            const { title, body, startDate, endDate, productIds, show } = this
+            const { title, body, image, startDate, endDate, productIds, show } = this
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(UPDATE_BANNER_REQUEST, {
