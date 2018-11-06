@@ -21,8 +21,8 @@
                 </v-card-text>               
             </template>
             <v-card-actions>
-                <edit-banner v-on:bannerUpdated="onBannerUpdated" buttonTitle="Edit Banner" :bannerId="_id"/>
-                <delete-banner buttonTitle="Delete Banner" :bannerId="_id"/>
+                <edit-banner v-on:bannerUpdated="onBannerUpdated" :buttonTitle="$vuetify.t('$vuetify.updateBanner')" :bannerId="_id"/>
+                <delete-banner :buttonTitle="$vuetify.t('$vuetify.deleteBanner')" :bannerId="_id"/>
             </v-card-actions>
         </v-card>
     </v-container>

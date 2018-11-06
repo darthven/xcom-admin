@@ -3,7 +3,7 @@
         <v-combobox
             v-model="selectedProducts"
             :items="products"
-            label="Select products"
+            :label="$vuetify.t('$vuetify.selectProducts')"
             name="selectedProducts"
             :error-messages="productsErrors"
             chips

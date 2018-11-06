@@ -10,9 +10,9 @@
         <v-toolbar-title>ADMIN PANEL</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-            <create-banner buttonTitle="Create New Banner"></create-banner>
-            <upload-file buttonTitle="Upload discounts (CSV)" fileType="text/csv"></upload-file>
-            <logout buttonTitle="Log out"></logout>
+            <create-banner :buttonTitle="$vuetify.t('$vuetify.createBanner')"></create-banner>
+            <upload-file :buttonTitle="$vuetify.t('$vuetify.uploadCSVFile')" fileType="text/csv"></upload-file>
+            <logout :buttonTitle="$vuetify.t('$vuetify.logout')"></logout>
         </v-toolbar-items>
     </v-toolbar>
     <v-content>

@@ -6,14 +6,14 @@
             <v-dialog v-model="visible" max-width="500px">
             <v-card>
                 <v-card-title class="headline grey lighten-2" primary-title>
-                    Delete Banner
+                    {{ $vuetify.t('$vuetify.deleteBannerTitle') }}
                 </v-card-title>
                 <v-card-text>
-                    Are you sure to delete this banner?
+                    {{ $vuetify.t('$vuetify.beforeDeletion') }}
                 </v-card-text>
                 <v-card-actions class="pa-3">
-                    <v-btn color="primary" flat @click="remove">Delete</v-btn>
-                    <v-btn color="primary" flat @click="visible = false">Close</v-btn>
+                    <v-btn color="primary" flat @click="remove">{{ $vuetify.t('$vuetify.yes') }}</v-btn>
+                    <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.no') }} </v-btn>
                 </v-card-actions>                
             </v-card>
         </v-dialog>

@@ -7,14 +7,14 @@
         <v-dialog v-model="visible" max-width="500px">
             <v-card>
                 <v-card-title class="headline grey lighten-2" primary-title>
-                    Create New Banner
+                    {{ $vuetify.t('$vuetify.createBannerTitle') }}
                 </v-card-title>
                 <image-selector :url="imageUrl" v-on:selectedImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
                             name="title"
-                            label="Title"
+                            :label="$vuetify.t('$vuetify.title')"
                             type="text"
                             v-model="title"
                             :error-messages="titleErrors"
@@ -25,7 +25,7 @@
                             ></v-text-field>
                         <v-textarea
                             name="body"
-                            label="Body"
+                            :label="$vuetify.t('$vuetify.body')"
                             type="text"
                             v-model="body"
                             :error-messages="bodyErrors"
@@ -39,12 +39,12 @@
                             v-on:updateStartDate="onStartDateUpdated"
                             v-on:updateEndDate="onEndDateUpdated"
                             ></dates-range>
-                        <v-checkbox label="Public" v-model="show"></v-checkbox>
+                        <v-checkbox :label="$vuetify.t('$vuetify.public')" v-model="show"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">
-                    <v-btn color="primary" flat @click="create">Create</v-btn>
-                    <v-btn color="primary" flat @click="visible = false">Close</v-btn>
+                    <v-btn color="primary" flat @click="create">{{ $vuetify.t('$vuetify.create') }}</v-btn>
+                    <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.close') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

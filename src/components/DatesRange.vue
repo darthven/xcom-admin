@@ -17,7 +17,7 @@
                     <v-text-field
                         slot="activator"
                         v-model="startDate"
-                        label="Start date"
+                        :label="$vuetify.t('$vuetify.startDate')"
                         name="startDate"
                         :error-messages="startDateErrors"
                         prepend-icon="event"                        
@@ -40,7 +40,7 @@
                     <v-text-field
                         slot="activator"
                         v-model="endDate"
-                        label="End date"
+                        :label="$vuetify.t('$vuetify.endDate')"
                         name="endDate"
                         :error-messages="endDateErrors"
                         prepend-icon="event"

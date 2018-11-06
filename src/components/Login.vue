@@ -14,7 +14,7 @@
                   <v-text-field
                     prepend-icon="person"
                     name="email"
-                    label="Login"
+                    :label="$vuetify.t('$vuetify.login')"
                     type="text"
                     v-model="email"
                     :error-messages="emailErrors"
@@ -28,7 +28,7 @@
                     id="password"
                     prepend-icon="lock"
                     name="password"
-                    label="Password"
+                    :label="$vuetify.t('$vuetify.password')"
                     type="password"
                     v-model="password"
                     :error-messages="passwordErrors"
@@ -43,7 +43,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn @click="submit" flat>
-                  Login           
+                  {{ $vuetify.t('$vuetify.loginAction') }}           
                 </v-btn>                    
               </v-card-actions>
             </v-card>
