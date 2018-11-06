@@ -150,6 +150,7 @@ export default {
                         banner: {
                             title,
                             body,
+                            image,
                             startDate,
                             endDate,
                             productIds,
