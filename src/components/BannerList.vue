@@ -17,7 +17,7 @@
             ></banner>
         </div>
         <div v-else class="empty">
-            {{ $vuetify.t('$vuetify.nodata') }}
+            {{ $vuetify.t('$vuetify.noData') }}
         </div>
     </v-container>
 </template>
