@@ -127,6 +127,7 @@ export default {
                     .dispatch(CREATE_BANNER_REQUEST, {
                         title,
                         body,
+                        productIds,
                         startDate,
                         endDate,
                         productIds,
@@ -137,6 +138,7 @@ export default {
                         this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
                             .then(res => {
                                 this.imageUrl = res.data.url
+                                console.log('URL', this.imageUrl)
                             })
                             .then(res => {
                                 this.visible = false
