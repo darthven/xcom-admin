@@ -16,13 +16,13 @@
                 >
                     <v-text-field
                         slot="activator"
-                        v-model="startDate"
                         :label="$vuetify.t('$vuetify.startDate')"
                         name="startDate"
+                        v-model="startDate"
                         :error-messages="startDateErrors"
                         prepend-icon="event"                        
                     ></v-text-field>
-                    <v-date-picker v-model="startDate" no-title @input="updateStartDate"></v-date-picker>
+                    <v-date-picker v-model="selectedStartDate" no-title @input="updateStartDate"></v-date-picker>
                 </v-menu>
             </v-flex>
             <v-flex xs12 lg6>
@@ -39,13 +39,13 @@
                 >
                     <v-text-field
                         slot="activator"
-                        v-model="endDate"
                         :label="$vuetify.t('$vuetify.endDate')"
                         name="endDate"
+                        v-model="endDate"
                         :error-messages="endDateErrors"
                         prepend-icon="event"
                     ></v-text-field>
-                    <v-date-picker v-model="endDate" no-title @input="updateEndDate"></v-date-picker>
+                    <v-date-picker v-model="selectedEndDate" no-title @input="updateEndDate"></v-date-picker>
                 </v-menu>
             </v-flex>
         </v-layout>
@@ -57,9 +57,13 @@ import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
 export default {
+    props: {
+        startDate: String,
+        endDate: String
+    },
     data: () => ({
-        startDate: null,
-        endDate: null,
+        selectedStartDate: null,
+        selectedEndDate: null,
         start: false,
         end: false
     }),
@@ -86,11 +90,11 @@ export default {
     methods: {
         updateStartDate() {
             this.start = false
-            this.$emit('updateStartDate', this.startDate)
+            this.$emit('updateStartDate', this.selectedStartDate)
         },
         updateEndDate() {
             this.end = false
-            this.$emit('updateEndDate', this.endDate)
+            this.$emit('updateEndDate', this.selectedEndDate)
         }
     }
 }

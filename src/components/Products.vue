@@ -2,7 +2,7 @@
     <v-container>
         <v-combobox
             v-model="selectedProducts"
-            :items="products"
+            :items="availableProducts"
             :label="$vuetify.t('$vuetify.selectProducts')"
             name="selectedProducts"
             :error-messages="productsErrors"
@@ -32,7 +32,7 @@ import { required } from 'vuelidate/lib/validators'
 export default {
     data() {
         return {
-            products: [1, 2, 3, 4, 5],
+            availableProducts: [1, 2, 3, 4, 5],
             selectedProducts: []
         }
     },

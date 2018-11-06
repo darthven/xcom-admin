@@ -13,11 +13,7 @@ const actions = {
             commit(IMAGE_UPLOAD_REQUEST)
             console.log('FORM DATA', image)
             axios
-                .post(`/api/banner/${bannerId}/image`, image, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
+                .post(`/api/banner/${bannerId}/image`, image)
                 .then(response => {
                     commit(IMAGE_UPLOAD_SUCCESS, response)
                     resolve(response)
