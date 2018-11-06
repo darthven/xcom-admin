@@ -150,7 +150,6 @@ export default {
                         banner: {
                             title,
                             body,
-                            image,
                             startDate,
                             endDate,
                             productIds,
@@ -158,8 +157,14 @@ export default {
                         }
                     })
                     .then(res => {
-                        this.$emit('bannerUpdated')
-                        this.visible = false
+                        this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
+                            .then(res => {
+                                this.imageUrl = res.data.url
+                            })
+                            .then(res => {
+                                this.$emit('bannerUpdated')
+                                this.visible = false
+                            })
                     })
             }
         }

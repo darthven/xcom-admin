@@ -134,11 +134,9 @@ export default {
                         show
                     })
                     .then(res => {
-                        console.log('IMAGE', image)
                         this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
                             .then(res => {
                                 this.imageUrl = res.data.url
-                                console.log('URL', this.imageUrl)
                             })
                             .then(res => {
                                 this.visible = false
