@@ -60,7 +60,7 @@ import { CREATE_BANNER_REQUEST } from './../store/actions/banner'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
-import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage';
+import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage'
 
 export default {
     components: {

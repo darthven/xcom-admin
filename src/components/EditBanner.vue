@@ -64,6 +64,7 @@ import {
     BANNER_REQUEST,
     UPDATE_BANNER_REQUEST
 } from './../store/actions/banner'
+import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
