@@ -113,7 +113,6 @@ export default {
             this.endDate = value
         },
         onImageSelected(value) {
-            console.log('VALUE', value)
             this.image = value
         },
         onProductsUpdated(value) {

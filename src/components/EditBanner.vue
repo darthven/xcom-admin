@@ -9,7 +9,7 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     {{ $vuetify.t('$vuetify.updateBannerTitle') }}
                 </v-card-title>
-                <image-selector :url="imageUrl" v-on:selectImage="onImageSelected"></image-selector>
+                <image-selector :url="image" v-on:selectedImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -94,7 +94,6 @@ export default {
         endDate: null,
         productIds: [],
         image: null,
-        imageUrl: '',
         show: false,
         visible: false
     }),
@@ -161,10 +160,10 @@ export default {
                     .then(res => {
                         this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
                             .then(res => {
-                                this.imageUrl = res.data.url
+                                this.image = res.data.url
                             })
                             .then(res => {
-                                this.$emit('bannerUpdated')
+                             this.$emit('bannerUpdated')
                                 this.visible = false
                             })
                     })

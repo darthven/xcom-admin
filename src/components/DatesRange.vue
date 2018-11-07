@@ -18,10 +18,10 @@
                         slot="activator"
                         :label="$vuetify.t('$vuetify.startDate')"
                         name="startDate"
-                        v-model="startDate"
+                        v-model="selectedStartDate"
                         :error-messages="startDateErrors"
                         prepend-icon="event"                        
-                    ></v-text-field>
+                    >{{ startDate }}</v-text-field>
                     <v-date-picker v-model="selectedStartDate" no-title @input="updateStartDate"></v-date-picker>
                 </v-menu>
             </v-flex>
@@ -41,10 +41,10 @@
                         slot="activator"
                         :label="$vuetify.t('$vuetify.endDate')"
                         name="endDate"
-                        v-model="endDate"
+                        v-model="selectedEndDate"
                         :error-messages="endDateErrors"
                         prepend-icon="event"
-                    ></v-text-field>
+                    >{{ endDate }}</v-text-field>
                     <v-date-picker v-model="selectedEndDate" no-title @input="updateEndDate"></v-date-picker>
                 </v-menu>
             </v-flex>
