@@ -41,7 +41,7 @@ export default {
         },
         uploadFile() {
             const formData = new FormData()
-            formData.append('file', this.file)
+            formData.append('file', this.file, this.file.name)
             this.$store.dispatch(DISCOUNT_UPLOAD_REQUEST, formData).then(res => {
                 this.fileUploaded = true
             })

@@ -9,7 +9,7 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     {{ $vuetify.t('$vuetify.createBannerTitle') }}
                 </v-card-title>
-                <image-selector :url="imageUrl" v-on:selectedImage="onImageSelected"></image-selector>
+                <image-selector :url="image" v-on:selectedImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -56,7 +56,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { AUTH_REQUEST } from '../store/actions/auth'
-import { CREATE_BANNER_REQUEST } from './../store/actions/banner'
+import { CREATE_BANNER_REQUEST, BANNERS_REQUEST } from './../store/actions/banner'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
@@ -82,7 +82,6 @@ export default {
         startDate: null,
         endDate: null,
         image: null,
-        imageUrl: '',
         productIds: [],
         show: true,
         visible: false
@@ -134,11 +133,14 @@ export default {
                     .then(res => {
                         this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
                             .then(res => {
-                                this.imageUrl = res.data.url
+                                this.image = res.data.url
                             })
                             .then(res => {
-                                this.visible = false
+                                this.$store.dispatch(BANNERS_REQUEST)
                             })
+                    })
+                    .then(res => {
+                        this.visible = false
                     })
             }
         }

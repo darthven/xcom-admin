@@ -10,7 +10,9 @@
                 </div>
             </v-card-title>
             <template v-if="!hidden">
-                <img class="imageClass" v-if="image" :src="image"/>
+                <v-layout flex xs6>
+                    <v-img class="imageClass" v-if="image" :src="image"/>
+                </v-layout>
                 <v-card-text>
                     {{ body }}
                 </v-card-text>
@@ -21,8 +23,10 @@
                 </v-card-text>               
             </template>
             <v-card-actions>
-                <edit-banner v-on:bannerUpdated="onBannerUpdated" :buttonTitle="$vuetify.t('$vuetify.updateBanner')" :bannerId="_id"/>
-                <delete-banner :buttonTitle="$vuetify.t('$vuetify.deleteBanner')" :bannerId="_id"/>
+                <v-flex justify-start>
+                    <edit-banner v-on:bannerUpdated="onBannerUpdated" :buttonTitle="$vuetify.t('$vuetify.updateBanner')" :bannerId="_id"/>
+                    <delete-banner :buttonTitle="$vuetify.t('$vuetify.deleteBanner')" :bannerId="_id"/>
+                </v-flex>
             </v-card-actions>
         </v-card>
     </v-container>

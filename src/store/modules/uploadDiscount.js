@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { DISCOUNT_UPLOAD_REQUEST, DISCOUNT_UPLOAD_SUCCESS, DISCOUNT_UPLOAD_ERROR } from '../actions/uploadDiscount'
+import { XCOM_URL } from '../../config/env.config'
 
 const state = {
     uploadStatus: '',
@@ -12,7 +13,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(DISCOUNT_UPLOAD_REQUEST)
             axios
-                .get('/api', fileData)
+                .post(`${XCOM_URL}/shares`, fileData)
                 .then(response => {
                     commit(DISCOUNT_UPLOAD_SUCCESS, response)
                     resolve(response)

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import auth from './store/modules/auth'
 import banner from './store/modules/banner'
+import products from './store/modules/products'
 import uploadDiscount from './store/modules/uploadDiscount'
 import uploadImage from './store/modules/uploadImage'
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     modules: {
         auth,
         banner,
+        products,
         uploadDiscount,
         uploadImage
     },

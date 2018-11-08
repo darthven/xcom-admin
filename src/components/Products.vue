@@ -29,10 +29,14 @@
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
+import { PRODUCTS_REQUEST } from './../store/actions/products'
+
 export default {
+    created() {
+        this.$store.dispatch(PRODUCTS_REQUEST)
+    },
     data() {
         return {
-            availableProducts: [1, 2, 3, 4, 5],
             selectedProducts: []
         }
     },
@@ -41,7 +45,13 @@ export default {
             const errors = []
             this.selectedProducts.length === 0 && errors.push('Products are required')
             return errors
+        },
+        availableProducts: {
+            get() {
+                return this.$store.getters.productIds
+            }
         }
+
     },
     methods: {
         selectProduct() {
