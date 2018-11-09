@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-img v-if="url" :src="url"/>
-        <input type="file" ref="file" accept="image/*" @change="selectImage()"/>   
+        <input type="file" ref="file" accept="image/*" @change="selectImage"/>   
     </v-container>
 </template>
 
@@ -13,7 +13,7 @@ export default {
         url: null
     }),
     methods: {
-        selectImage(event) {
+        selectImage() {
             const image = this.$refs.file.files[0]
             this.url = URL.createObjectURL(image)
             const formData = new FormData()

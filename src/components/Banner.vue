@@ -4,6 +4,7 @@
             <v-card-title @click="showContent" class="headline grey lighten-2" primary-title>
                 {{ title }}
                 <v-spacer></v-spacer>
+                {{ startDate }} - {{ endDate }}
                 <div class="text-xs-center">
                     <v-chip v-if="endDate < new Date()" color="red" text-color="white">Overdue</v-chip>
                     <v-chip v-else color="green" text-color="white">Active</v-chip>
@@ -55,6 +56,11 @@ export default {
     data: () => ({
         hidden: true
     }),
+    computed: {
+        formattedDate(date) {
+            return date.toISOString().substr(0, 10)
+        }
+    },
     methods: {
         onBannerUpdated(val) {
             this.$emit('bannersUpdated')

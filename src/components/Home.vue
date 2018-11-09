@@ -11,7 +11,8 @@
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
             <create-banner :buttonTitle="$vuetify.t('$vuetify.createBanner')"></create-banner>
-            <upload-file :buttonTitle="$vuetify.t('$vuetify.uploadCSVFile')" fileType="text/csv"></upload-file>
+            <upload-file action="IMPORT_VIRTUAL_CARDS_REQUEST" :buttonTitle="$vuetify.t('$vuetify.importVirtualCardsCSV')" fileType="text/csv"></upload-file>
+            <upload-file action="DISCOUNT_UPLOAD_REQUEST" :buttonTitle="$vuetify.t('$vuetify.uploadCSVFile')" fileType="text/csv"></upload-file>
             <logout :buttonTitle="$vuetify.t('$vuetify.logout')"></logout>
         </v-toolbar-items>
     </v-toolbar>

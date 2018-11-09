@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-import { DISCOUNT_UPLOAD_REQUEST, DISCOUNT_UPLOAD_SUCCESS, DISCOUNT_UPLOAD_ERROR } from '../actions/uploadDiscount'
+import {
+    IMPORT_VIRTUAL_CARDS_REQUEST,
+    IMPORT_VIRTUAL_CARDS_SUCCESS,
+    IMPORT_VIRTUAL_CARDS_ERROR
+} from '../actions/importVirtualCards'
 import { XCOM_URL } from '../../config/env.config'
 
 const state = {
@@ -9,21 +13,22 @@ const state = {
 }
 
 const actions = {
-    [DISCOUNT_UPLOAD_REQUEST]: ({ commit }, data) => {
+    [IMPORT_VIRTUAL_CARDS_REQUEST]: ({ commit }, fileData) => {
         return new Promise((resolve, reject) => {
-            commit(DISCOUNT_UPLOAD_REQUEST)
+            commit(IMPORT_VIRTUAL_CARDS_REQUEST)
             axios
-                .post(`http://localhost:1340/api/shares`, data, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+                .post(`${XCOM_URL}/virtCards`, fileData, {
+                    auth: {
+                        user: 'admin',
+                        password: '684585'
                     }
                 })
                 .then(response => {
-                    commit(DISCOUNT_UPLOAD_SUCCESS, response)
+                    commit(IMPORT_VIRTUAL_CARDS_SUCCESS, response)
                     resolve(response)
                 })
                 .catch(error => {
-                    commit(DISCOUNT_UPLOAD_ERROR, error)
+                    commit(IMPORT_VIRTUAL_CARDS_ERROR, error)
                     reject(error)
                 })
         })
@@ -31,14 +36,14 @@ const actions = {
 }
 
 const mutations = {
-    [DISCOUNT_UPLOAD_REQUEST]: state => {
+    [IMPORT_VIRTUAL_CARDS_REQUEST]: state => {
         state.uploadStatus = 'loading'
     },
-    [DISCOUNT_UPLOAD_SUCCESS]: (state, response) => {
+    [IMPORT_VIRTUAL_CARDS_SUCCESS]: (state, response) => {
         state.uploadStatus = 'success'
         state.uploadCode = response.code
     },
-    [DISCOUNT_UPLOAD_ERROR]: (state, error) => {
+    [IMPORT_VIRTUAL_CARDS_ERROR]: (state, error) => {
         state.uploadStatus = 'error'
         state.uploadCode = error.code
     }
