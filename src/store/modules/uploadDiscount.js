@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { DISCOUNT_UPLOAD_REQUEST, DISCOUNT_UPLOAD_SUCCESS, DISCOUNT_UPLOAD_ERROR } from '../actions/uploadDiscount'
-import { XCOM_URL } from '../../config/env.config'
+import { XCOM_URL, XCOM_USER, XCOM_PASS } from '../../config/env.config'
 
 const state = {
     uploadStatus: '',
@@ -11,11 +11,16 @@ const state = {
 const actions = {
     [DISCOUNT_UPLOAD_REQUEST]: ({ commit }, data) => {
         return new Promise((resolve, reject) => {
+            console.log(data)
             commit(DISCOUNT_UPLOAD_REQUEST)
             axios
-                .post(`http://localhost:1340/api/shares`, data, {
+                .post(`${XCOM_URL}/shares`, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
+                    },
+                    auth: {
+                        username: XCOM_USER,
+                        password: XCOM_PASS
                     }
                 })
                 .then(response => {
