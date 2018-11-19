@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <admin-header></admin-header>
     <router-view/>
     <v-footer app class="pa-3">
       <v-spacer></v-spacer>
@@ -9,12 +10,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import AdminHeader from './components/AdminHeader'
 
 export default {
     name: 'App',
-    data() {
-        return {}
+    components: {
+      AdminHeader
     }
 }
 </script>

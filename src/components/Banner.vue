@@ -4,7 +4,9 @@
             <v-card-title @click="showContent" class="headline grey lighten-2" primary-title>
                 {{ title }}
                 <v-spacer></v-spacer>
-                {{ startDate }} - {{ endDate }}
+                <div class="dates">
+                    {{ formattedStartDate }} &#8212; {{ formattedEndDate }}
+                </div>
                 <div class="text-xs-center">
                     <v-chip v-if="endDate < new Date()" color="red" text-color="white">Overdue</v-chip>
                     <v-chip v-else color="green" text-color="white">Active</v-chip>
@@ -25,8 +27,15 @@
             </template>
             <v-card-actions>
                 <v-flex justify-start>
-                    <edit-banner v-on:bannerUpdated="onBannerUpdated" :buttonTitle="$vuetify.t('$vuetify.updateBanner')" :bannerId="_id"/>
-                    <delete-banner :buttonTitle="$vuetify.t('$vuetify.deleteBanner')" :bannerId="_id"/>
+                    <edit-banner
+                        v-on:bannerUpdated="onBannerUpdated"
+                        :buttonTitle="$vuetify.t('$vuetify.edit')"
+                        :bannerId="_id"
+                    />
+                    <delete-banner
+                        :buttonTitle="$vuetify.t('$vuetify.delete')"
+                        :bannerId="_id"
+                    />
                 </v-flex>
             </v-card-actions>
         </v-card>
@@ -57,8 +66,11 @@ export default {
         hidden: true
     }),
     computed: {
-        formattedDate(date) {
-            return date.toISOString().substr(0, 10)
+        formattedStartDate() {
+            return this.startDate.toISOString().substr(0, 10)
+        },
+        formattedEndDate() {
+            return this.endDate.toISOString().substr(0, 10)
         }
     },
     methods: {
@@ -78,6 +90,9 @@ export default {
     .imageClass {
         padding-top: 20px;
         padding-left: 16px;
+    }
+    .dates {
+        margin-right: 40px;
     }
 </style>
 

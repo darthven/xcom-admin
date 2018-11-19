@@ -4,6 +4,10 @@ import Router from 'vue-router'
 import store from './store'
 import Login from './components/Login'
 import Home from './components/Home'
+import BannersToolbar from './components/BannersToolbar'
+import BannerList from './components/BannerList'
+import BlocksToolbar from './components/BlocksToolbar'
+import BlockList from './components/BlockList'
 
 Vue.use(Router)
 
@@ -25,10 +29,29 @@ export default new Router({
             component: Login
         },
         {
-            path: '/home',
-            name: 'home',
+            path: '/admin',
+            redirect: '/admin/banners',
+            name: 'admin',
             component: Home,
-            beforeEnter: ifAuthenticated
+            beforeEnter: ifAuthenticated,
+            children: [
+                {
+                    path: 'banners',
+                    name: 'banners',
+                    components: {
+                        default: BannerList,
+                        toolbar: BannersToolbar
+                    }
+                },
+                {
+                    path: 'blocks',
+                    name: 'blocks',
+                    components: {
+                        default: BlockList,
+                        toolbar: BlocksToolbar
+                    }
+                }
+            ]
         }
     ]
 })

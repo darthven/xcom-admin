@@ -59,7 +59,6 @@ import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { AUTH_REQUEST } from '../store/actions/auth'
 import {
-    CREATE_BANNER_REQUEST,
     BANNERS_REQUEST,
     BANNER_REQUEST,
     UPDATE_BANNER_REQUEST

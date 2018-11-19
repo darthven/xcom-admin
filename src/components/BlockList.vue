@@ -3,22 +3,20 @@
         <v-container fluid fill-height>
             <v-layout justify-center align-center>  
                 <v-container> 
-                    <div v-if="banners.length > 0">
-                        <banner
-                            v-for="(item, index) in banners"
+                    <div v-if="blocks.length > 0">
+                        <block
+                            v-for="(item, index) in blocks"
                             :item="item"
                             :index="index"
                             :key="item._id"
                             :_id="item._id"
                             :title="item.title"
-                            :body="item.body"
-                            :image="item.image"
-                            :startDate="new Date(item.startDate)"
-                            :endDate="new Date(item.endDate)"
+                            :region="item.region"
+                            :store="item.store"
                             :productIds="item.productIds"
-                            :show="item.show"
-                            v-on:bannersUpdated="onBannersUpdated"
-                        ></banner>
+                            :active="item.active"
+                            v-on:blocksUpdated="onBlocksUpdated"
+                        ></block>
                     </div>
                     <div v-else class="empty">
                         {{ $vuetify.t('$vuetify.noData') }}
@@ -30,24 +28,24 @@
 </template>
 
 <script>
-import { BANNERS_REQUEST } from './../store/actions/banner'
-import Banner from './Banner'
+import { BLOCKS_REQUEST } from './../store/actions/block'
+import Block from './Block'
 
 export default {
     components: {
-        Banner
+        Block
     },
     created() {
-        this.$store.dispatch(BANNERS_REQUEST)
+        this.$store.dispatch(BLOCKS_REQUEST)
     },
     computed: {
-        banners() {
-            return this.$store.getters.banners
+        blocks() {
+            return this.$store.getters.blocks
         }
     },
     methods: {
-        onBannersUpdated() {
-            this.$store.dispatch(BANNERS_REQUEST)
+        onBlocksUpdated() {
+            this.$store.dispatch(BLOCKS_REQUEST)
         }
     }
 }

@@ -7,9 +7,8 @@
         <v-dialog v-model="visible" max-width="500px">
             <v-card>
                 <v-card-title class="headline grey lighten-2" primary-title>
-                    {{ $vuetify.t('$vuetify.createBannerTitle') }}
+                    {{ $vuetify.t('$vuetify.createBlockTitle') }}
                 </v-card-title>
-                <image-selector :url="image" v-on:selectedImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -23,29 +22,26 @@
                             @input="$v.title.$touch()"
                             @blur="$v.title.$touch()"
                             ></v-text-field>
-                        <v-textarea
-                            name="body"
-                            :label="$vuetify.t('$vuetify.body')"
+                        <v-text-field
+                            name="region"
+                            :label="$vuetify.t('$vuetify.region')"
                             type="text"
-                            v-model="body"
-                            :error-messages="bodyErrors"
-                            :counter="4096"
-                            required
-                            @input="$v.body.$touch()"
-                            @blur="$v.body.$touch()"
-                            ></v-textarea>
+                            v-model="region"
+                        ></v-text-field>    
+                        <v-text-field
+                            name="store"
+                            :label="$vuetify.t('$vuetify.store')"
+                            type="text"
+                            v-model="store"
+                        ></v-text-field> 
                         <products v-on:productsUpdated="onProductsUpdated"></products>
-                        <dates-range
-                            v-on:updateStartDate="onStartDateUpdated"
-                            v-on:updateEndDate="onEndDateUpdated"
-                            ></dates-range>
-                        <v-checkbox :label="$vuetify.t('$vuetify.public')" v-model="show"></v-checkbox>
+                        <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">
                     <v-btn color="primary" flat @click="create">{{ $vuetify.t('$vuetify.create') }}</v-btn>
                     <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.close') }}</v-btn>
-                </v-card-actions>
+                </v-card-actions>   
             </v-card>
         </v-dialog>
     </v-btn>
@@ -55,35 +51,30 @@
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
-import { CREATE_BANNER_REQUEST, BANNERS_REQUEST } from './../store/actions/banner'
-import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage'
-import DatesRange from './DatesRange'
-import ImageSelector from './ImageSelector'
+import { CREATE_BLOCK_REQUEST, BLOCKS_REQUEST } from './../store/actions/block'
 import Products from './Products'
-
 
 export default {
     components: {
-        DatesRange,
-        ImageSelector,
         Products
     },
     mixins: [validationMixin],
     validations: {
         title: { required, minLength: minLength(1), maxLength: maxLength(128) },
-        body: { required, minLength: minLength(1), maxLength: maxLength(4096) }
+        region: { required },
+        store: { required },
+        productIds: { required }
     },
     props: {
         buttonTitle: String
     },
     data: () => ({
         title: '',
-        body: '',
-        startDate: null,
-        endDate: null,
-        image: null,
+        region: '',
+        store: '',
         productIds: [],
-        show: true,
+        active: true,
+        sortCriteria: '',
         visible: false
     }),
     computed: {
@@ -94,50 +85,26 @@ export default {
             !this.$v.title.minLength && errors.push('Title must be at least 1 characters long')
             !this.$v.title.maxLength && errors.push('Title must be at most 128 characters long')
             return errors
-        },
-        bodyErrors() {
-            const errors = []
-            if (!this.$v.body.$dirty) return errors
-            !this.$v.body.required && errors.push('Body is required')
-            !this.$v.body.minLength && errors.push('Body must be at least 1 characters long')
-            !this.$v.body.maxLength && errors.push('Body must be at most 4096 characters long')
-            return errors
         }
     },
     methods: {
-        onStartDateUpdated(value) {
-            this.startDate = value
-        },
-        onEndDateUpdated(value) {
-            this.endDate = value
-        },
-        onImageSelected(value) {
-            this.image = value
-        },
         onProductsUpdated(value) {
             this.productIds = value
         },
         create() {
             this.$v.$touch()
-            const { title, image, body, productIds, startDate, endDate, show } = this
+            const { title, region, store, productIds, active } = this
             if (!this.$v.$invalid) {
                 this.$store
-                    .dispatch(CREATE_BANNER_REQUEST, {
+                    .dispatch(CREATE_BLOCK_REQUEST, {
                         title,
-                        body,
+                        region,
+                        store,
                         productIds,
-                        startDate,
-                        endDate,
-                        show
+                        active
                     })
                     .then(res => {
-                        this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
-                            .then(res => {
-                                this.image = res.data.url
-                            })
-                            .then(res => {
-                                this.$store.dispatch(BANNERS_REQUEST)
-                            })
+                        this.$store.dispatch(BLOCKS_REQUEST)
                     })
                     .then(res => {
                         this.visible = false

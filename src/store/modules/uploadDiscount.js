@@ -14,7 +14,7 @@ const actions = {
             console.log(data)
             commit(DISCOUNT_UPLOAD_REQUEST)
             axios
-                .post(`${XCOM_URL}/shares`, data, {
+                .post(`${XCOM_URL}/api/shares`, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
