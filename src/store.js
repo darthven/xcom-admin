@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import auth from './store/modules/auth'
 import banner from './store/modules/banner'
 import block from './store/modules/block'
-import products from './store/modules/products'
+import xcom from './store/modules/xcom'
 import virtualCards from './store/modules/importVirtualCards'
 import uploadDiscount from './store/modules/uploadDiscount'
 import uploadImage from './store/modules/uploadImage'
@@ -18,7 +18,7 @@ export default new Vuex.Store({
         auth,
         banner,
         block,
-        products,
+        xcom,
         uploadDiscount,
         virtualCards,
         uploadImage

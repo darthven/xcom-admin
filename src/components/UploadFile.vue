@@ -10,7 +10,7 @@
                     {{ $vuetify.t('$vuetify.uploadFile') }}
                 </v-card-title>
                 <v-card-actions class="pa-3">
-                    <input type="file" ref="file" accept="text/csv" @change="selectFile"/>
+                    <input type="file" ref="file" :accept="fileType" @change="selectFile"/>
                     <v-btn 
                         color="primary"
                         :disabled="!file || fileUploaded"
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { DISCOUNT_UPLOAD_REQUEST } from './../store/actions/uploadDiscount.js'
+import { DISCOUNT_UPLOAD_REQUEST } from './../store/actions/uploadDiscount'
 
 export default {
     props: {

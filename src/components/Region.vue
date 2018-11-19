@@ -1,22 +1,21 @@
 <template>
     <v-container>
         <v-combobox
-            v-model="selectedProducts"
-            :items="availableProducts"
+            v-model="selectedRegion"
+            :items="availableRegions"
             :label="$vuetify.t('$vuetify.selectProducts')"
-            name="selectedProducts"
-            :error-messages="productsErrors"
+            name="selectedRegion"
+            :error-messages="regionErrors"
             chips
             clearable
             solo
-            multiple
-            @blur="selectProduct"
+            @blur="selectRegion"
         >
             <template slot="selection" slot-scope="data">
                 <v-chip
                     :selected="data.selected"
                     close                   
-                    @input="removeProduct(data.item)"
+                    @input="removeRegion(data.item)"
                 >
                     <strong>{{ data.item }}</strong>
                 </v-chip>
@@ -29,33 +28,38 @@
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
+import { REGIONS_REQUEST } from './../store/actions/xcom'
+
 export default {
+    created() {
+        this.$store.dispatch(REGIONS_REQUEST)
+    },
     data() {
         return {
-            selectedProducts: []
+            selectedRegion: null
         }
     },
     computed: {
-        productsErrors() {
+        regionErrors() {
             const errors = []
-            this.selectedProducts.length === 0 && errors.push('Products are required')
+            this.selectedRegion === null && errors.push('Region is required')
             return errors
         },
-        availableProducts: {
+        availableRegions: {
             get() {
-                return this.$store.getters.productIds
+                return this.$store.getters.regionIds
             }
         }
 
     },
     methods: {
-        selectProduct() {
-            this.$emit('productsUpdated', this.selectedProducts)
+        selectRegion() {
+            console.log(this.selectedRegion)
+            this.$emit('regionUpdated', this.selectedRegion)
         },
-        removeProduct(item) {
-            this.selectedProducts.splice(this.selectedProducts.indexOf(item), 1)
-            this.selectedProducts = [...this.selectedProducts]
-            this.$emit('productsUpdated', this.selectedProducts)
+        removeRegion(item) {
+            this.selectedRegion = null
+            this.$emit('regionUpdated', this.selectedRegion)
         }
     }
 }

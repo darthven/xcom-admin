@@ -11,11 +11,13 @@
             </v-card-title>
             <template v-if="!hidden">
                 <v-card-text>
-                    {{ region }}
+                    {{ storeId }}
                 </v-card-text>
                 <v-card-text>
-                    {{ store }}
-                </v-card-text>
+                    <v-chip selected>
+                        <strong>{{ regionId }}</strong>
+                    </v-chip>                   
+                </v-card-text>     
                 <v-card-text>
                     <v-chip selected :key=id v-for="id in productIds">
                         <strong>{{ id }}</strong>
@@ -52,8 +54,8 @@ export default {
     props: {
         _id: String,
         title: String,
-        region: String,
-        store: String,
+        regionId: String,
+        storeId: String,
         productIds: Array,
         active: Boolean        
     },

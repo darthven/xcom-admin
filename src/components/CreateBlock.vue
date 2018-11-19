@@ -21,19 +21,14 @@
                             required
                             @input="$v.title.$touch()"
                             @blur="$v.title.$touch()"
-                            ></v-text-field>
-                        <v-text-field
-                            name="region"
-                            :label="$vuetify.t('$vuetify.region')"
-                            type="text"
-                            v-model="region"
-                        ></v-text-field>    
+                            ></v-text-field>   
                         <v-text-field
                             name="store"
                             :label="$vuetify.t('$vuetify.store')"
                             type="text"
-                            v-model="store"
+                            v-model="storeId"
                         ></v-text-field> 
+                        <region v-on:regionUpdated="onRegionUpdated"></region>
                         <products v-on:productsUpdated="onProductsUpdated"></products>
                         <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
                     </v-form>
@@ -52,26 +47,26 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { CREATE_BLOCK_REQUEST, BLOCKS_REQUEST } from './../store/actions/block'
+import Region from './Region'
 import Products from './Products'
+import { PRODUCTS_REQUEST } from '../store/actions/xcom';
 
 export default {
     components: {
+        Region,
         Products
     },
     mixins: [validationMixin],
     validations: {
-        title: { required, minLength: minLength(1), maxLength: maxLength(128) },
-        region: { required },
-        store: { required },
-        productIds: { required }
+        title: { required, minLength: minLength(1), maxLength: maxLength(128) }
     },
     props: {
         buttonTitle: String
     },
     data: () => ({
         title: '',
-        region: '',
-        store: '',
+        regionId: null,
+        storeId: null,
         productIds: [],
         active: true,
         sortCriteria: '',
@@ -88,25 +83,31 @@ export default {
         }
     },
     methods: {
+        onRegionUpdated(value) {
+            if (value) {
+                this.regionId = value
+                this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
+            }
+        },
         onProductsUpdated(value) {
             this.productIds = value
         },
         create() {
             this.$v.$touch()
-            const { title, region, store, productIds, active } = this
+            const { title, regionId, storeId, productIds, active } = this
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(CREATE_BLOCK_REQUEST, {
                         title,
-                        region,
-                        store,
+                        regionId,
+                        storeId,
                         productIds,
                         active
                     })
                     .then(res => {
                         this.$store.dispatch(BLOCKS_REQUEST)
                     })
-                    .then(res => {
+                    .then(async res => {
                         this.visible = false
                     })
             }
