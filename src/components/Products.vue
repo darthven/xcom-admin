@@ -10,7 +10,6 @@
             clearable
             solo
             multiple
-            @blur="selectProduct"
         >
             <template slot="selection" slot-scope="data">
                 <v-chip
@@ -28,34 +27,39 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import { SELECT_PRODUCTS, REMOVE_PRODUCT } from '../store/actions/xcom'
 
 export default {
-    data() {
-        return {
-            selectedProducts: []
-        }
-    },
     computed: {
-        productsErrors() {
-            const errors = []
-            this.selectedProducts.length === 0 && errors.push('Products are required')
-            return errors
+        productsErrors: {
+            get() {
+                const errors = []
+                !this.selectedProducts && errors.push('Products are required')
+                return errors
+            }
         },
         availableProducts: {
             get() {
-                return this.$store.getters.productIds
+                return this.$store.getters.productIds || []
+            }
+        },
+        selectedProducts: {
+            get() {
+                return this.$store.getters.selectedProducts
+            },
+            set(val) {
+                this.$store.dispatch(SELECT_PRODUCTS, val).then(res => {
+                    this.$emit('productsUpdated', res)
+                })  
             }
         }
 
     },
     methods: {
-        selectProduct() {
-            this.$emit('productsUpdated', this.selectedProducts)
-        },
         removeProduct(item) {
-            this.selectedProducts.splice(this.selectedProducts.indexOf(item), 1)
-            this.selectedProducts = [...this.selectedProducts]
-            this.$emit('productsUpdated', this.selectedProducts)
+            this.$store.dispatch(REMOVE_PRODUCT, item).then(res => {
+                this.$emit('productsUpdated', res)
+            })     
         }
     }
 }

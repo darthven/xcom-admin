@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import { DISCOUNT_UPLOAD_REQUEST } from './../store/actions/uploadDiscount'
-
 export default {
     props: {
         buttonTitle: String,
@@ -51,7 +49,7 @@ export default {
         },
         uploadFile() {
             const formData = new FormData()
-            formData.append('shares', this.file, this.file.name)
+            formData.append('file', this.file, this.file.name)
             this.$store.dispatch(this.action, formData).then(res => {
                 this.fileUploaded = true
             })

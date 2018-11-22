@@ -5,9 +5,8 @@ import auth from './store/modules/auth'
 import banner from './store/modules/banner'
 import block from './store/modules/block'
 import xcom from './store/modules/xcom'
-import virtualCards from './store/modules/importVirtualCards'
-import uploadDiscount from './store/modules/uploadDiscount'
-import uploadImage from './store/modules/uploadImage'
+import dates from './store/modules/dates'
+import image from './store/modules/image'
 
 Vue.use(Vuex)
 
@@ -19,9 +18,8 @@ export default new Vuex.Store({
         banner,
         block,
         xcom,
-        uploadDiscount,
-        virtualCards,
-        uploadImage
+        dates,
+        image
     },
     strict: debug
 })

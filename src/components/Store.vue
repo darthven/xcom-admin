@@ -1,11 +1,11 @@
 <template>
     <v-container>
         <v-combobox
-            v-model="selectedRegion"
-            :items="availableRegions"
+            v-model="selectedStore"
+            :items="availableStores"
             :label="$vuetify.t('$vuetify.selectProducts')"
-            name="selectedRegion"
-            :error-messages="regionErrors"
+            name="selectedStore"
+            :error-messages="storeErrors"
             chips
             clearable
             solo
@@ -13,7 +13,7 @@
             <template slot="selection" slot-scope="data">
                 <v-chip
                     :selected="data.selected"               
-                    @input="removeRegion(data.item)"
+                    @input="removeStore(data.item)"
                 >
                     <strong>{{ data.item }}</strong>
                 </v-chip>
@@ -26,39 +26,36 @@
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
-import { REGIONS_REQUEST, SELECT_REGION } from './../store/actions/xcom'
+import { SELECT_STORE } from './../store/actions/xcom'
 
 export default {
-    created() {
-        this.$store.dispatch(REGIONS_REQUEST)
-    },
     computed: {
-        regionErrors() {
+        storeErrors() {
             const errors = []
-            !this.selectedRegion && errors.push('Region is required')
+            !this.selectedStore && errors.push('Store is required')
             return errors
         },
-        selectedRegion: {
+        selectedStore: {
             get() {
-                return this.$store.getters.selectedRegion
+                return this.$store.getters.selectedStore
             },
             set(val) {
-                this.$store.dispatch(SELECT_REGION, val).then(res => {
-                    this.$emit('regionUpdated', res)
+                this.$store.dispatch(SELECT_STORE, val).then(res => {
+                    this.$emit('storeUpdated', res)
                 })  
             }
         },
-        availableRegions: {
+        availableStores: {
             get() {
-                return this.$store.getters.regionIds
+                return this.$store.getters.storeIds
             }
         }
 
     },
     methods: {
-        removeRegion() {
-            this.$store.dispatch(SELECT_REGION, null).then(res => {
-                this.$emit('regionUpdated', res)
+        removeStore() {
+            this.$store.dispatch(SELECT_STORE, null).then(res => {
+                this.$emit('storeUpdated', res)
             })            
         }
     }

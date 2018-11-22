@@ -38,7 +38,7 @@
                         <dates-range
                             v-on:updateStartDate="onStartDateUpdated"
                             v-on:updateEndDate="onEndDateUpdated"
-                            ></dates-range>
+                        ></dates-range>
                         <v-checkbox :label="$vuetify.t('$vuetify.public')" v-model="show"></v-checkbox>
                     </v-form>
                 </v-card-text>
@@ -56,7 +56,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { CREATE_BANNER_REQUEST, BANNERS_REQUEST } from './../store/actions/banner'
-import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage'
+import { IMAGE_UPLOAD_REQUEST } from '../store/actions/image'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'

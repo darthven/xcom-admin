@@ -9,7 +9,7 @@
                 <v-card-title class="headline grey lighten-2" primary-title>
                     {{ $vuetify.t('$vuetify.updateBannerTitle') }}
                 </v-card-title>
-                <image-selector :url="image" v-on:selectedImage="onImageSelected"></image-selector>
+                <image-selector :bannerId="bannerId" v-on:selectedImage="onImageSelected"></image-selector>
                 <v-card-text>
                     <v-form>
                         <v-text-field
@@ -34,10 +34,8 @@
                             @input="$v.body.$touch()"
                             @blur="$v.body.$touch()"
                             > {{ body }}</v-textarea>
-                        <products :selectedProducts="productIds" v-on:productsUpdated="onProductsUpdated"></products>
+                        <products v-on:productsUpdated="onProductsUpdated"></products>
                         <dates-range
-                            :startDate="startDate"
-                            :endDate="endDate"
                             v-on:updateStartDate="onStartDateUpdated"
                             v-on:updateEndDate="onEndDateUpdated"
                         ></dates-range>
@@ -46,7 +44,7 @@
                 </v-card-text>
                 <v-card-actions class="pa-3">
                     <v-btn color="primary" flat @click="update">{{ $vuetify.t('$vuetify.update') }}</v-btn>
-                    <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.close') }}</v-btn>
+                    <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -63,7 +61,9 @@ import {
     BANNER_REQUEST,
     UPDATE_BANNER_REQUEST
 } from './../store/actions/banner'
-import { IMAGE_UPLOAD_REQUEST } from '../store/actions/uploadImage'
+import { IMAGE_UPLOAD_REQUEST, SELECT_IMAGE } from '../store/actions/image'
+import { SELECT_PRODUCTS } from '../store/actions/xcom'
+import { SELECT_DATES } from '../store/actions/dates'
 import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
@@ -92,6 +92,7 @@ export default {
         startDate: null,
         endDate: null,
         productIds: [],
+        imageUpdated: false,
         image: null,
         show: false,
         visible: false
@@ -122,14 +123,14 @@ export default {
             this.endDate = value
         },
         onImageSelected(value) {
+            this.imageUpdated = true
             this.image = value
         },
         onProductsUpdated(value) {
             this.productIds = value
         },
         open() {
-            this.$store.dispatch(BANNER_REQUEST, this.bannerId).then(res => {
-                console.log(res.data)
+            this.$store.dispatch(BANNER_REQUEST, this.bannerId).then(async res => {
                 const { title, body, image, startDate, endDate, productIds, show } = res.data
                 this.title = title
                 this.body = body
@@ -139,14 +140,18 @@ export default {
                 this.show = show
                 this.image = image
                 this.visible = true
+                await this.$store.dispatch(SELECT_DATES, { startDate, endDate })
+                await this.$store.dispatch(SELECT_PRODUCTS, this.productIds)
+                await this.$store.dispatch(SELECT_IMAGE, this.image)
             })
         },
         update() {
-            const { title, body, image, startDate, endDate, productIds, show } = this
+            const { bannerId, title, body, image, startDate, endDate, productIds, show, imageUpdated } = this
+            console.log(productIds)
             if (!this.$v.$invalid) {
                 this.$store
                     .dispatch(UPDATE_BANNER_REQUEST, {
-                        bannerId: this.bannerId,
+                        bannerId,
                         banner: {
                             title,
                             body,
@@ -157,16 +162,22 @@ export default {
                         }
                     })
                     .then(res => {
-                        this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
-                            .then(res => {
-                                this.image = res.data.url
-                            })
-                            .then(res => {
-                             this.$emit('bannerUpdated')
-                                this.visible = false
-                            })
+                        if (imageUpdated) {
+                            this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId, image })
+                        }
+                    })
+                    .then(res => {
+                        this.$emit('bannerUpdated')
+                        this.close()
                     })
             }
+        },
+        async close() {
+            await this.$store.dispatch(SELECT_DATES, { startDate: null, endDate: null })
+            await this.$store.dispatch(SELECT_PRODUCTS, [])
+            await this.$store.dispatch(SELECT_IMAGE, null)
+            this.imageUpdated = false
+            this.visible = false
         }
     }
 }

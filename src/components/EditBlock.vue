@@ -22,20 +22,15 @@
                             @input="$v.title.$touch()"
                             @blur="$v.title.$touch()"
                             ></v-text-field>  
-                        <v-text-field
-                            name="storeId"
-                            :label="$vuetify.t('$vuetify.store')"
-                            type="text"
-                            v-model="storeId"
-                        ></v-text-field> 
                         <region v-on:regionUpdated="onRegionUpdated"></region>
+                        <store v-on:storeUpdated="onStoreUpdated"></store>
                         <products v-on:productsUpdated="onProductsUpdated"></products>
                         <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
                     </v-form>
                 </v-card-text>
                 <v-card-actions class="pa-3">
                     <v-btn color="primary" flat @click="update">{{ $vuetify.t('$vuetify.update') }}</v-btn>
-                    <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.close') }}</v-btn>
+                    <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -46,18 +41,20 @@
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
-import { PRODUCTS_REQUEST } from './../store/actions/xcom'
+import { PRODUCTS_REQUEST, SELECT_REGION, SELECT_STORE, SELECT_PRODUCTS, STORES_REQUEST } from './../store/actions/xcom'
 import {
     BLOCKS_REQUEST,
     BLOCK_REQUEST,
     UPDATE_BLOCK_REQUEST
 } from './../store/actions/block'
 import Region from './Region'
+import Store from './Store'
 import Products from './Products'
 
 export default {
     components: {
         Region,
+        Store,
         Products
     },
     mixins: [validationMixin],
@@ -89,18 +86,21 @@ export default {
         }
     },
     methods: {
-        onRegionUpdated(value) {
+       async onRegionUpdated(value) {
             if (value) {
                 this.regionId = value
-                this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
+                await this.$store.dispatch(STORES_REQUEST, this.regionId)
+                await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
             }
+        },
+        onStoreUpdated(value) {
+            this.storeId = value
         },
         onProductsUpdated(value) {
             this.productIds = value
         },
         open() {
-            this.$store.dispatch(BLOCK_REQUEST, this.blockId).then(res => {
-                console.log(res.data)
+            this.$store.dispatch(BLOCK_REQUEST, this.blockId).then(async res => {
                 const { title, regionId, storeId, productIds, active } = res.data
                 this.title = title
                 this.regionId = regionId
@@ -108,6 +108,11 @@ export default {
                 this.productIds = productIds
                 this.active = active
                 this.visible = true
+                await this.$store.dispatch(SELECT_REGION, this.regionId)
+                await this.$store.dispatch(STORES_REQUEST, this.regionId)
+                await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
+                await this.$store.dispatch(SELECT_STORE, this.storeId)
+                await this.$store.dispatch(SELECT_PRODUCTS, this.productIds)
             })
         },
         update() {
@@ -124,11 +129,17 @@ export default {
                             active
                         }
                     })
-                    .then(async res => {
+                    .then(res => {
                         this.$emit('blockUpdated')
-                        this.visible = false
+                        this.close()
                     })
             }
+        },
+        async close() {
+            await this.$store.dispatch(SELECT_REGION, null)
+            await this.$store.dispatch(SELECT_STORE, null)
+            await this.$store.dispatch(SELECT_PRODUCTS, [])
+            this.visible = false
         }
     }
 }

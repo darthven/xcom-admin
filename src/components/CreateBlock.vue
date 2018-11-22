@@ -22,13 +22,8 @@
                             @input="$v.title.$touch()"
                             @blur="$v.title.$touch()"
                             ></v-text-field>   
-                        <v-text-field
-                            name="store"
-                            :label="$vuetify.t('$vuetify.store')"
-                            type="text"
-                            v-model="storeId"
-                        ></v-text-field> 
                         <region v-on:regionUpdated="onRegionUpdated"></region>
+                        <store v-on:storeUpdated="onStoreUpdated"></store>
                         <products v-on:productsUpdated="onProductsUpdated"></products>
                         <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
                     </v-form>
@@ -47,13 +42,16 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { CREATE_BLOCK_REQUEST, BLOCKS_REQUEST } from './../store/actions/block'
+import { PRODUCTS_REQUEST, STORES_REQUEST } from '../store/actions/xcom'
 import Region from './Region'
+import Store from './Store'
 import Products from './Products'
-import { PRODUCTS_REQUEST } from '../store/actions/xcom';
+
 
 export default {
     components: {
         Region,
+        Store,
         Products
     },
     mixins: [validationMixin],
@@ -83,11 +81,15 @@ export default {
         }
     },
     methods: {
-        onRegionUpdated(value) {
+        async onRegionUpdated(value) {
             if (value) {
                 this.regionId = value
-                this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
+                await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
+                await this.$store.dispatch(STORES_REQUEST, this.regionId)
             }
+        },
+        onStoreUpdated(value) {
+            this.storeId = value
         },
         onProductsUpdated(value) {
             this.productIds = value
