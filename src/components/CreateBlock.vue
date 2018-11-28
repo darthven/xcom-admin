@@ -30,7 +30,7 @@
                 </v-card-text>
                 <v-card-actions class="pa-3">
                     <v-btn color="primary" flat @click="create">{{ $vuetify.t('$vuetify.create') }}</v-btn>
-                    <v-btn color="primary" flat @click="visible = false">{{ $vuetify.t('$vuetify.close') }}</v-btn>
+                    <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
                 </v-card-actions>   
             </v-card>
         </v-dialog>
@@ -110,9 +110,15 @@ export default {
                         this.$store.dispatch(BLOCKS_REQUEST)
                     })
                     .then(async res => {
-                        this.visible = false
+                        this.close()
                     })
             }
+        },
+        async close() {
+            await this.$store.dispatch(SELECT_DATES, { startDate: null, endDate: null })
+            await this.$store.dispatch(SELECT_PRODUCTS, [])
+            await this.$store.dispatch(SELECT_IMAGE, null)
+            this.visible = false
         }
     }
 }

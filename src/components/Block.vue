@@ -11,15 +11,17 @@
             </v-card-title>
             <template v-if="!hidden">
                 <v-card-text>
-                    {{ $vuetify.t('$vuetify.store') }}: 
-                    {{ storeId }}
-                </v-card-text>
-                <v-card-text>
                     {{ $vuetify.t('$vuetify.region') }}:
                     <v-chip selected>
                         <strong>{{ regionId }}</strong>
                     </v-chip>                   
                 </v-card-text>     
+                <v-card-text>
+                    {{ $vuetify.t('$vuetify.store') }}: 
+                    <v-chip selected>
+                        <strong>{{ storeId }}</strong>
+                    </v-chip>     
+                </v-card-text>
                 <v-card-text>
                     {{ $vuetify.t('$vuetify.products') }}:
                     <v-chip selected :key=id v-for="id in productIds">

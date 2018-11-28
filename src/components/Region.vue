@@ -3,7 +3,7 @@
         <v-combobox
             v-model="selectedRegion"
             :items="availableRegions"
-            :label="$vuetify.t('$vuetify.selectProducts')"
+            :label="$vuetify.t('$vuetify.selectRegion')"
             name="selectedRegion"
             :error-messages="regionErrors"
             chips

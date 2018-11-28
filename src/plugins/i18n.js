@@ -43,6 +43,8 @@ const messages = {
             close: 'Закрыть',
             public: 'Открытый доступ',
             selectProducts: 'Выбрать товары',
+            selectStore: 'Выбрать аптеку',
+            selectRegion: 'Выбрать регион',
             startDate: 'Начало действия',
             endDate: 'Окончание действия',
             noData: 'Данные отсутствуют'
