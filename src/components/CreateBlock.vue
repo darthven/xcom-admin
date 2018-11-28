@@ -42,7 +42,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { CREATE_BLOCK_REQUEST, BLOCKS_REQUEST } from './../store/actions/block'
-import { PRODUCTS_REQUEST, STORES_REQUEST } from '../store/actions/xcom'
+import { PRODUCTS_REQUEST, STORES_REQUEST, SELECT_REGION, SELECT_STORE, SELECT_PRODUCTS } from '../store/actions/xcom'
 import Region from './Region'
 import Store from './Store'
 import Products from './Products'
@@ -115,9 +115,10 @@ export default {
             }
         },
         async close() {
-            await this.$store.dispatch(SELECT_DATES, { startDate: null, endDate: null })
+            await this.$store.dispatch(SELECT_STORE, null)
+            await this.$store.dispatch(SELECT_REGION, null)
             await this.$store.dispatch(SELECT_PRODUCTS, [])
-            await this.$store.dispatch(SELECT_IMAGE, null)
+            this.title = ''
             this.visible = false
         }
     }
