@@ -26,10 +26,10 @@ export default {
                 const formData = new FormData()
                 this.url = URL.createObjectURL(image)
                 formData.append('file', image, image.name)
-                this.$emit('selectedImage', formData)  
+                this.$emit('selectedImage', formData)
             } else {
                 this.url = null
-                this.$emit('selectedImage', this.url)                
+                this.$emit('selectedImage', this.url)
             }
         }
     }

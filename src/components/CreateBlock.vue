@@ -47,7 +47,6 @@ import Region from './Region'
 import Store from './Store'
 import Products from './Products'
 
-
 export default {
     components: {
         Region,

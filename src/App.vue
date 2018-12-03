@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <admin-header></admin-header>
     <router-view/>
     <v-footer app class="pa-3">
       <v-spacer></v-spacer>
@@ -10,12 +9,12 @@
 </template>
 
 <script>
-import AdminHeader from './components/AdminHeader'
+import NotFound from './components/NotFound'
 
 export default {
     name: 'App',
     components: {
-      AdminHeader
+      NotFound
     }
 }
 </script>

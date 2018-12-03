@@ -73,14 +73,16 @@ export default {
             const errors = []
             if (!this.$v.startDate.$dirty) return errors
             !this.$v.startDate.required && errors.push('Start date is required')
-            new Date(this.endDate) < new Date(this.startDate) && errors.push('Start date cannot be larger than end date')
+            new Date(this.endDate) < new Date(this.startDate) &&
+                errors.push('Start date cannot be larger than end date')
             return errors
         },
         endDateErrors() {
             const errors = []
             if (!this.$v.endDate.$dirty) return errors
             !this.$v.endDate.required && errors.push('End date is required')
-            new Date(this.endDate) < new Date(this.startDate) && errors.push('Start date cannot be larger than end date')
+            new Date(this.endDate) < new Date(this.startDate) &&
+                errors.push('Start date cannot be larger than end date')
             return errors
         },
         startDate: {

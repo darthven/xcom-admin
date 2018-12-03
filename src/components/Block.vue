@@ -62,7 +62,7 @@ export default {
         regionId: Number,
         storeId: Number,
         productIds: Array,
-        active: Boolean        
+        active: Boolean
     },
     data: () => ({
         hidden: true

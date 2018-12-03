@@ -76,12 +76,11 @@ export default {
 </script>
 
 <style scoped>
-    .imageClass {
-        padding-top: 20px;
-        padding-left: 16px;
-    }
-    .dates {
-        margin-right: 40px;
-    }
+.imageClass {
+    padding-top: 20px;
+    padding-left: 16px;
+}
+.dates {
+    margin-right: 40px;
+}
 </style>
-

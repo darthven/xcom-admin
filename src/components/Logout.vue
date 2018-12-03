@@ -13,7 +13,7 @@ export default {
     },
     methods: {
         logout() {
-            this.$store.dispatch(AUTH_LOGOUT).then(res => this.$router.push({ path: '/' }))
+            this.$store.dispatch(AUTH_LOGOUT).then(res => this.$router.push({ path: '/login' }))
         }
     }
 }

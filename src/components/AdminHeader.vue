@@ -29,7 +29,7 @@ export default {
         isAuthenticated: {
             get() {
                 return this.$store.getters.isAuthenticated
-            }    
+            }
         }
     },
     methods: {

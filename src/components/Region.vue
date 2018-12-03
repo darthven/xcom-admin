@@ -45,7 +45,7 @@ export default {
             set(val) {
                 this.$store.dispatch(SELECT_REGION, val).then(res => {
                     this.$emit('regionUpdated', res)
-                })  
+                })
             }
         },
         availableRegions: {
@@ -53,13 +53,12 @@ export default {
                 return this.$store.getters.regionIds
             }
         }
-
     },
     methods: {
         removeRegion() {
             this.$store.dispatch(SELECT_REGION, null).then(res => {
                 this.$emit('regionUpdated', res)
-            })            
+            })
         }
     }
 }

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import store from './store'
 import Login from './components/Login'
+import NotFound from './components/NotFound'
 import Home from './components/Home'
 import BannersToolbar from './components/BannersToolbar'
 import BannerList from './components/BannerList'
@@ -16,7 +17,7 @@ const ifAuthenticated = (to, from, next) => {
         next()
         return
     }
-    next('/')
+    next('/login')
 }
 
 export default new Router({
@@ -24,6 +25,11 @@ export default new Router({
     routes: [
         {
             path: '/',
+            redirect: 'admin',
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/login',
             name: 'login',
             component: Login
         },
@@ -51,6 +57,11 @@ export default new Router({
                     }
                 }
             ]
+        },
+        {
+            path: '*',
+            name: 'notFound',
+            component: NotFound
         }
     ]
 })

@@ -63,7 +63,6 @@ import DatesRange from './DatesRange'
 import ImageSelector from './ImageSelector'
 import Products from './Products'
 
-
 export default {
     components: {
         DatesRange,
@@ -133,7 +132,8 @@ export default {
                         show
                     })
                     .then(res => {
-                        this.$store.dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
+                        this.$store
+                            .dispatch(IMAGE_UPLOAD_REQUEST, { bannerId: res.data._id, image })
                             .then(res => {
                                 this.image = res.data.url
                             })

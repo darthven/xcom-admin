@@ -42,11 +42,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { PRODUCTS_REQUEST, SELECT_REGION, SELECT_STORE, SELECT_PRODUCTS, STORES_REQUEST } from './../store/actions/xcom'
-import {
-    BLOCKS_REQUEST,
-    BLOCK_REQUEST,
-    UPDATE_BLOCK_REQUEST
-} from './../store/actions/block'
+import { BLOCKS_REQUEST, BLOCK_REQUEST, UPDATE_BLOCK_REQUEST } from './../store/actions/block'
 import Region from './Region'
 import Store from './Store'
 import Products from './Products'
@@ -86,7 +82,7 @@ export default {
         }
     },
     methods: {
-       async onRegionUpdated(value) {
+        async onRegionUpdated(value) {
             if (value) {
                 this.regionId = value
                 await this.$store.dispatch(STORES_REQUEST, this.regionId)

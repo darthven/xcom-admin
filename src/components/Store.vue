@@ -42,7 +42,7 @@ export default {
             set(val) {
                 this.$store.dispatch(SELECT_STORE, val).then(res => {
                     this.$emit('storeUpdated', res)
-                })  
+                })
             }
         },
         availableStores: {
@@ -50,13 +50,12 @@ export default {
                 return this.$store.getters.storeIds
             }
         }
-
     },
     methods: {
         removeStore() {
             this.$store.dispatch(SELECT_STORE, null).then(res => {
                 this.$emit('storeUpdated', res)
-            })            
+            })
         }
     }
 }

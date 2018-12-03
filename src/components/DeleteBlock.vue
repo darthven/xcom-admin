@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { DELETE_BLOCK_REQUEST } from '../store/actions/block';
+import { DELETE_BLOCK_REQUEST } from '../store/actions/block'
 
 export default {
     props: {

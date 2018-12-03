@@ -2,6 +2,7 @@
   <v-app id="login">
     <v-content>
       <v-container fluid fill-height>
+        <admin-header></admin-header>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
@@ -57,10 +58,13 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
-
+import AdminHeader from './AdminHeader'
 import { AUTH_REQUEST } from '../store/actions/auth.js'
 
 export default {
+    components: {
+        AdminHeader
+    },
     mixins: [validationMixin],
     validations: {
         email: { required, email, minLength: minLength(5), maxLength: maxLength(25) },

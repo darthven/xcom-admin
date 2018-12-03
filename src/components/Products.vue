@@ -50,16 +50,15 @@ export default {
             set(val) {
                 this.$store.dispatch(SELECT_PRODUCTS, val).then(res => {
                     this.$emit('productsUpdated', res)
-                })  
+                })
             }
         }
-
     },
     methods: {
         removeProduct(item) {
             this.$store.dispatch(REMOVE_PRODUCT, item).then(res => {
                 this.$emit('productsUpdated', res)
-            })     
+            })
         }
     }
 }

@@ -56,11 +56,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 import { AUTH_REQUEST } from '../store/actions/auth'
-import {
-    BANNERS_REQUEST,
-    BANNER_REQUEST,
-    UPDATE_BANNER_REQUEST
-} from './../store/actions/banner'
+import { BANNERS_REQUEST, BANNER_REQUEST, UPDATE_BANNER_REQUEST } from './../store/actions/banner'
 import { IMAGE_UPLOAD_REQUEST, SELECT_IMAGE } from '../store/actions/image'
 import { SELECT_PRODUCTS } from '../store/actions/xcom'
 import { SELECT_DATES } from '../store/actions/dates'
