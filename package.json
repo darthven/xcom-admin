@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "now --public && now alias",
+    "deploy": "pm2 startOrReload ecosystem.config.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -24,7 +24,6 @@
     "@vue/cli-service": "^3.0.5",
     "@vue/eslint-config-prettier": "^3.0.5",
     "babel-plugin-transform-imports": "^1.5.0",
-    "now": "^12.1.5",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.2.1",
