@@ -17,7 +17,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(IMAGE_UPLOAD_REQUEST)
             axios
-                .post(`/api/banner/${bannerId}/image`, image, {
+                .post(`/admin-api/banner/${bannerId}/image`, image, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
