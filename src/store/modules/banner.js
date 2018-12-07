@@ -30,7 +30,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(BANNER_REQUEST)
             axios
-                .get(`/api/banner/${bannerId}`)
+                .get(`/admin-api/banner/${bannerId}`)
                 .then(response => {
                     commit(BANNER_SUCCESS, response)
                     resolve(response)
@@ -45,7 +45,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(BANNER_REQUEST)
             axios
-                .get(`/api/banner`)
+                .get(`/admin-api/banner`)
                 .then(response => {
                     commit(BANNERS_SUCCESS, response)
                     resolve(response)
@@ -60,7 +60,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(CREATE_BANNER_REQUEST)
             axios
-                .post('/api/banner', banner)
+                .post('/admin-api/banner', banner)
                 .then(response => {
                     commit(CREATE_BANNER_SUCCESS, response)
                     resolve(response)
@@ -75,7 +75,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(UPDATE_BANNER_REQUEST)
             axios
-                .put(`/api/banner/${bannerId}`, banner)
+                .put(`/admin-api/banner/${bannerId}`, banner)
                 .then(response => {
                     commit(UPDATE_BANNER_SUCCESS, response)
                     resolve(response)
@@ -90,7 +90,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(CREATE_BANNER_REQUEST)
             axios
-                .delete(`/api/banner/${bannerId}`)
+                .delete(`/admin-api/banner/${bannerId}`)
                 .then(response => {
                     commit(DELETE_BANNER_SUCCESS, response)
                     resolve(response)

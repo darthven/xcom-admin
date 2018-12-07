@@ -30,7 +30,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(BLOCKS_REQUEST)
             axios
-                .get(`/api/block/${blockId}`)
+                .get(`/admin-api/block/${blockId}`)
                 .then(response => {
                     commit(BLOCK_SUCCESS, response)
                     resolve(response)
@@ -45,7 +45,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(BLOCKS_REQUEST)
             axios
-                .get(`/api/block`)
+                .get(`/admin-api/block`)
                 .then(response => {
                     commit(BLOCKS_SUCCESS, response)
                     resolve(response)
@@ -60,7 +60,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(CREATE_BLOCK_REQUEST)
             axios
-                .post('/api/block', block)
+                .post('/admin-api/block', block)
                 .then(response => {
                     commit(CREATE_BLOCK_SUCCESS, response)
                     resolve(response)
@@ -75,7 +75,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(UPDATE_BLOCK_REQUEST)
             axios
-                .put(`/api/block/${blockId}`, block)
+                .put(`/admin-api/block/${blockId}`, block)
                 .then(response => {
                     commit(UPDATE_BLOCK_SUCCESS, response)
                     resolve(response)
@@ -90,7 +90,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit(DELETE_BLOCK_REQUEST)
             axios
-                .delete(`/api/block/${blockId}`)
+                .delete(`/admin-api/block/${blockId}`)
                 .then(response => {
                     commit(DELETE_BLOCK_SUCCESS, response)
                     resolve(response)
