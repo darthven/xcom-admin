@@ -1,40 +1,38 @@
 <template>
-    <v-btn 
-        flat
-        @click="visible = true"
-        >
-        {{ buttonTitle }}
-        <v-dialog v-model="visible" max-width="500px">
-            <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title>
-                    {{ $vuetify.t('$vuetify.createBlockTitle') }}
-                </v-card-title>
-                <v-card-text>
-                    <v-form>
-                        <v-text-field
-                            name="title"
-                            :label="$vuetify.t('$vuetify.title')"
-                            type="text"
-                            v-model="title"
-                            :error-messages="titleErrors"
-                            :counter="128"
-                            required
-                            @input="$v.title.$touch()"
-                            @blur="$v.title.$touch()"
-                            ></v-text-field>   
-                        <region v-on:regionUpdated="onRegionUpdated"></region>
-                        <store v-on:storeUpdated="onStoreUpdated"></store>
-                        <products v-on:productsUpdated="onProductsUpdated"></products>
-                        <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
-                    </v-form>
-                </v-card-text>
-                <v-card-actions class="pa-3">
-                    <v-btn color="primary" flat @click="create">{{ $vuetify.t('$vuetify.create') }}</v-btn>
-                    <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
-                </v-card-actions>   
-            </v-card>
-        </v-dialog>
-    </v-btn>
+  <v-btn flat @click="visible = true">
+    {{ buttonTitle }}
+    <v-dialog v-model="visible" max-width="500px">
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >{{ $vuetify.t('$vuetify.createBlockTitle') }}</v-card-title>
+        <v-card-text>
+          <v-form>
+            <v-text-field
+              name="title"
+              :label="$vuetify.t('$vuetify.title')"
+              type="text"
+              v-model="title"
+              :error-messages="titleErrors"
+              :counter="128"
+              required
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+            ></v-text-field>
+            <region v-on:regionUpdated="onRegionUpdated"></region>
+            <store v-on:storeUpdated="onStoreUpdated"></store>
+            <products v-on:productsUpdated="onProductsUpdated"></products>
+            <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
+          </v-form>
+        </v-card-text>
+        <v-card-actions class="pa-3">
+          <v-btn color="primary" flat @click="create">{{ $vuetify.t('$vuetify.create') }}</v-btn>
+          <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-btn>
 </template>
 
 <script>
@@ -62,7 +60,7 @@ export default {
     },
     data: () => ({
         title: '',
-        regionId: null,
+        regionId: 0,
         storeId: null,
         productIds: [],
         active: true,
