@@ -62,14 +62,11 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(STORES_REQUEST)
             try {
-                const params = {
-                    type: 'Аптека'
-                }
-                if (regionId) {
-                    params.region = regionId
-                }
                 const storeIds = (await axios.get(`${XCOM_URL}/stores`, {
-                    params
+                    params: {
+                        type: 'Аптека',
+                        regionId
+                    }
                 })).data.map(st => st.id)
                 commit(STORES_SUCCESS, storeIds)
                 resolve(storeIds)
@@ -83,12 +80,10 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(PRODUCTS_REQUEST, regionId)
             try {
-                const params = {}
-                if (regionId) {
-                    params.region = regionId
-                }
                 const productIds = (await axios.get(`${XCOM_URL}/goods`, {
-                    params
+                    params: {
+                        regionId
+                    }
                 })).data.data.map(pr => pr.id)
                 commit(PRODUCTS_SUCCESS, productIds)
                 resolve(productIds)
