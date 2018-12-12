@@ -1,25 +1,20 @@
 <template>
-    <v-container>
-        <v-combobox
-            v-model="selectedRegion"
-            :items="availableRegions"
-            :label="$vuetify.t('$vuetify.selectRegion')"
-            name="selectedRegion"
-            :error-messages="regionErrors"
-            chips
-            clearable
-            solo
-        >
-            <template slot="selection" slot-scope="data">
-                <v-chip
-                    :selected="data.selected"               
-                    @input="removeRegion(data.item)"
-                >
-                    <strong>{{ data.item }}</strong>
-                </v-chip>
-            </template>
-        </v-combobox>
-    </v-container>
+  <v-container>
+    <v-combobox
+      v-model="selectedRegion"
+      :items="availableRegions"
+      :label="$vuetify.t('$vuetify.selectRegion')"
+      chips
+      clearable
+      solo
+    >
+      <template slot="selection" slot-scope="data">
+        <v-chip :selected="data.selected" @input="removeRegion(data.item)">
+          <strong>{{ data.item }}</strong>
+        </v-chip>
+      </template>
+    </v-combobox>
+  </v-container>
 </template>
 
 <script>
@@ -33,11 +28,6 @@ export default {
         this.$store.dispatch(REGIONS_REQUEST)
     },
     computed: {
-        regionErrors() {
-            const errors = []
-            !this.selectedRegion && errors.push('Region is required')
-            return errors
-        },
         selectedRegion: {
             get() {
                 return this.$store.getters.selectedRegion
