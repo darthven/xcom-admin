@@ -85,7 +85,7 @@ const actions = {
             try {
                 const params = {}
                 if (regionId) {
-                    params.regionId = regionId
+                    params.region = regionId
                 }
                 const productIds = (await axios.get(`${XCOM_URL}/goods`, {
                     params
