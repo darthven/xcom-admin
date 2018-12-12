@@ -13,7 +13,7 @@
         <v-card-text>
           {{ $vuetify.t('$vuetify.region') }}:
           <v-chip selected>
-            <strong>{{ regionId ? regionId : 'Все' }}</strong>
+            <strong>{{ regionId || 'Все' }}</strong>
           </v-chip>
         </v-card-text>
         <v-card-text>

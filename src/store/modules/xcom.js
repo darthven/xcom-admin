@@ -62,11 +62,14 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(STORES_REQUEST)
             try {
+                const params = {
+                    type: 'Аптека'
+                }
+                if (regionId) {
+                    params.region = regionId
+                }
                 const storeIds = (await axios.get(`${XCOM_URL}/stores`, {
-                    params: {
-                        type: 'Аптека',
-                        region: regionId
-                    }
+                    params
                 })).data.map(st => st.id)
                 commit(STORES_SUCCESS, storeIds)
                 resolve(storeIds)
