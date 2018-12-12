@@ -60,7 +60,7 @@ export default {
     },
     data: () => ({
         title: '',
-        regionId: 0,
+        regionId: null,
         storeId: null,
         productIds: [],
         active: true,

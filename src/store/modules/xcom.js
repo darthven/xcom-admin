@@ -80,10 +80,12 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(PRODUCTS_REQUEST, regionId)
             try {
+                const params = {}
+                if (regionId) {
+                    params.regionId = regionId
+                }
                 const productIds = (await axios.get(`${XCOM_URL}/goods`, {
-                    params: {
-                        region: regionId
-                    }
+                    params
                 })).data.data.map(pr => pr.id)
                 commit(PRODUCTS_SUCCESS, productIds)
                 resolve(productIds)
