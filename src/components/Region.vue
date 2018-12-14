@@ -30,7 +30,8 @@ export default {
     computed: {
         selectedRegion: {
             get() {
-                return this.$store.getters.selectedRegion
+                const selected = this.$store.getters.selectedRegion
+                return selected === -1 ? 'Все' : this.$store.getters.selectedRegion
             },
             set(val) {
                 this.$store.dispatch(SELECT_REGION, val).then(res => {
@@ -40,7 +41,7 @@ export default {
         },
         availableRegions: {
             get() {
-                return this.$store.getters.regionIds
+                return ['Все', ...this.$store.getters.regionIds]
             }
         }
     },

@@ -58,15 +58,18 @@ const actions = {
             }
         })
     },
-    [STORES_REQUEST]: ({ commit }, regionId) => {
+    [STORES_REQUEST]: ({ commit }, region) => {
         return new Promise(async (resolve, reject) => {
             commit(STORES_REQUEST)
             try {
+                const params = {
+                    type: 'Аптека'
+                }
+                if (region !== 'Все') {
+                    params.region = region
+                }
                 const storeIds = (await axios.get(`${XCOM_URL}/stores`, {
-                    params: {
-                        type: 'Аптека',
-                        regionId
-                    }
+                    params
                 })).data.map(st => st.id)
                 commit(STORES_SUCCESS, storeIds)
                 resolve(storeIds)
@@ -76,15 +79,14 @@ const actions = {
             }
         })
     },
-    [PRODUCTS_REQUEST]: ({ commit }, regionId) => {
+    [PRODUCTS_REQUEST]: ({ commit }, region) => {
         return new Promise(async (resolve, reject) => {
-            commit(PRODUCTS_REQUEST, regionId)
+            commit(PRODUCTS_REQUEST, region)
             try {
-                const productIds = (await axios.get(`${XCOM_URL}/goods`, {
-                    params: {
-                        regionId
-                    }
-                })).data.data.map(pr => pr.id)
+                const productIds =
+                    region !== 'Все'
+                        ? await axios.get(`${XCOM_URL}/goods`, { params: { region } }).data.data.map(pr => pr.id)
+                        : (await axios.get(`${XCOM_URL}/goods/get/all`)).data.map(pr => pr.id)
                 commit(PRODUCTS_SUCCESS, productIds)
                 resolve(productIds)
             } catch (err) {

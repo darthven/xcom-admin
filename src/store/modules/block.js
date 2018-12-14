@@ -59,6 +59,9 @@ const actions = {
     [CREATE_BLOCK_REQUEST]: ({ commit }, block) => {
         return new Promise((resolve, reject) => {
             commit(CREATE_BLOCK_REQUEST)
+            if (block.regionId === 'Все') {
+                block.regionId = -1
+            }
             axios
                 .post('/admin-api/block', block)
                 .then(response => {
@@ -74,6 +77,9 @@ const actions = {
     [UPDATE_BLOCK_REQUEST]: ({ commit }, { blockId, block }) => {
         return new Promise((resolve, reject) => {
             commit(UPDATE_BLOCK_REQUEST)
+            if (block.regionId === 'Все') {
+                block.regionId = -1
+            }
             axios
                 .put(`/admin-api/block/${blockId}`, block)
                 .then(response => {

@@ -13,7 +13,7 @@
         <v-card-text>
           {{ $vuetify.t('$vuetify.region') }}:
           <v-chip selected>
-            <strong>{{ regionId || 'Все' }}</strong>
+            <strong>{{ region }}</strong>
           </v-chip>
         </v-card-text>
         <v-card-text>
@@ -64,6 +64,11 @@ export default {
     data: () => ({
         hidden: true
     }),
+    computed: {
+        region() {
+            return this.regionId === -1 ? 'Все' : this.regionId
+        }
+    },
     methods: {
         onBlockUpdated(val) {
             this.$emit('blocksUpdated')

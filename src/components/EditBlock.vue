@@ -1,40 +1,38 @@
 <template>
-    <v-btn 
-        flat
-        @click="open"
-        >
-        {{ buttonTitle }}
-        <v-dialog v-model="visible" max-width="500px">
-            <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title>
-                    {{ $vuetify.t('$vuetify.updateBlockTitle') }}
-                </v-card-title>
-                <v-card-text>
-                    <v-form>
-                        <v-text-field
-                            name="title"
-                            :label="$vuetify.t('$vuetify.title')"
-                            type="text"
-                            v-model="title"
-                            :error-messages="titleErrors"
-                            :counter="128"
-                            required
-                            @input="$v.title.$touch()"
-                            @blur="$v.title.$touch()"
-                            ></v-text-field>  
-                        <region v-on:regionUpdated="onRegionUpdated"></region>
-                        <store v-on:storeUpdated="onStoreUpdated"></store>
-                        <products v-on:productsUpdated="onProductsUpdated"></products>
-                        <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
-                    </v-form>
-                </v-card-text>
-                <v-card-actions class="pa-3">
-                    <v-btn color="primary" flat @click="update">{{ $vuetify.t('$vuetify.update') }}</v-btn>
-                    <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-btn>
+  <v-btn flat @click="open">
+    {{ buttonTitle }}
+    <v-dialog v-model="visible" max-width="500px">
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >{{ $vuetify.t('$vuetify.updateBlockTitle') }}</v-card-title>
+        <v-card-text>
+          <v-form>
+            <v-text-field
+              name="title"
+              :label="$vuetify.t('$vuetify.title')"
+              type="text"
+              v-model="title"
+              :error-messages="titleErrors"
+              :counter="128"
+              required
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+            ></v-text-field>
+            <region v-on:regionUpdated="onRegionUpdated"></region>
+            <store v-on:storeUpdated="onStoreUpdated"></store>
+            <products v-on:productsUpdated="onProductsUpdated"></products>
+            <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
+          </v-form>
+        </v-card-text>
+        <v-card-actions class="pa-3">
+          <v-btn color="primary" flat @click="update">{{ $vuetify.t('$vuetify.update') }}</v-btn>
+          <v-btn color="primary" flat @click="close">{{ $vuetify.t('$vuetify.close') }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-btn>
 </template>
 
 <script>
@@ -79,14 +77,17 @@ export default {
             !this.$v.title.minLength && errors.push('Title must be at least 1 characters long')
             !this.$v.title.maxLength && errors.push('Title must be at most 128 characters long')
             return errors
+        },
+        region() {
+            return this.regionId === -1 ? 'Все' : this.regionId
         }
     },
     methods: {
         async onRegionUpdated(value) {
             if (value) {
                 this.regionId = value
-                await this.$store.dispatch(STORES_REQUEST, this.regionId)
-                await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
+                // await this.$store.dispatch(STORES_REQUEST, this.regionId)
+                await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId === -1 ? 'Все' : this.regionId)
             }
         },
         onStoreUpdated(value) {
@@ -105,7 +106,7 @@ export default {
                 this.active = active
                 this.visible = true
                 await this.$store.dispatch(SELECT_REGION, this.regionId)
-                await this.$store.dispatch(STORES_REQUEST, this.regionId)
+                // await this.$store.dispatch(STORES_REQUEST, this.regionId)
                 await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
                 await this.$store.dispatch(SELECT_STORE, this.storeId)
                 await this.$store.dispatch(SELECT_PRODUCTS, this.productIds)

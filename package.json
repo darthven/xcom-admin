@@ -1,32 +1,32 @@
 {
-  "name": "xcom-admin",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "deploy": "env-cmd .env.prod pm2 startOrReload ecosystem.config.js",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "qs": "^6.5.2",
-    "vue": "^2.5.17",
-    "vue-i18n": "^8.3.0",
-    "vue-router": "^3.0.1",
-    "vuelidate": "^0.7.4",
-    "vuetify": "^1.3.1",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.5",
-    "@vue/cli-plugin-eslint": "^3.0.5",
-    "@vue/cli-service": "^3.0.5",
-    "@vue/eslint-config-prettier": "^3.0.5",
-    "babel-plugin-transform-imports": "^1.5.0",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
-    "vue-cli-plugin-vuetify": "^0.2.1",
-    "vue-template-compiler": "^2.5.17"
-  }
+    "name": "xcom-admin",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "env-cmd .env vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "deploy": "env-cmd .env.prod pm2 startOrReload ecosystem.config.js",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "qs": "^6.5.2",
+        "vue": "^2.5.17",
+        "vue-i18n": "^8.3.0",
+        "vue-router": "^3.0.1",
+        "vuelidate": "^0.7.4",
+        "vuetify": "^1.3.1",
+        "vuex": "^3.0.1"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^3.0.5",
+        "@vue/cli-plugin-eslint": "^3.0.5",
+        "@vue/cli-service": "^3.0.5",
+        "@vue/eslint-config-prettier": "^3.0.5",
+        "babel-plugin-transform-imports": "^1.5.0",
+        "stylus": "^0.54.5",
+        "stylus-loader": "^3.0.1",
+        "vue-cli-plugin-vuetify": "^0.2.1",
+        "vue-template-compiler": "^2.5.17"
+    }
 }

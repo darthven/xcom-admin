@@ -82,7 +82,7 @@ export default {
             if (value) {
                 this.regionId = value
                 await this.$store.dispatch(PRODUCTS_REQUEST, this.regionId)
-                await this.$store.dispatch(STORES_REQUEST, this.regionId)
+                // await this.$store.dispatch(STORES_REQUEST, this.regionId)
             }
         },
         onStoreUpdated(value) {
