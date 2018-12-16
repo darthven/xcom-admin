@@ -1,27 +1,23 @@
 <template>
-    <v-container>
-        <v-combobox
-            v-model="selectedProducts"
-            :items="availableProducts"
-            :label="$vuetify.t('$vuetify.selectProducts')"
-            name="selectedProducts"
-            :error-messages="productsErrors"
-            chips
-            clearable
-            solo
-            multiple
-        >
-            <template slot="selection" slot-scope="data">
-                <v-chip
-                    :selected="data.selected"
-                    close                   
-                    @input="removeProduct(data.item)"
-                >
-                    <strong>{{ data.item }}</strong>
-                </v-chip>
-            </template>
-        </v-combobox>
-    </v-container>
+  <v-container>
+    <v-combobox
+      v-model="selectedProducts"
+      :items="availableProducts"
+      :label="$vuetify.t('$vuetify.selectProducts')"
+      name="selectedProducts"
+      :error-messages="productsErrors"
+      chips
+      clearable
+      solo
+      multiple
+    >
+      <template slot="selection" slot-scope="data">
+        <v-chip :selected="data.selected" close @input="removeProduct(data.item)">
+          <strong>{{ data.item }}</strong>
+        </v-chip>
+      </template>
+    </v-combobox>
+  </v-container>
 </template>
 
 <script>
@@ -48,7 +44,7 @@ export default {
                 return this.$store.getters.selectedProducts
             },
             set(val) {
-                this.$store.dispatch(SELECT_PRODUCTS, val).then(res => {
+                this.$store.dispatch(SELECT_PRODUCTS, val.toString().split(',')).then(res => {
                     this.$emit('productsUpdated', res)
                 })
             }

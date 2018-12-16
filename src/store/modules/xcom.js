@@ -83,10 +83,14 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             commit(PRODUCTS_REQUEST, region)
             try {
-                const productIds =
-                    region !== 'Все'
-                        ? await axios.get(`${XCOM_URL}/goods`, { params: { region } }).data.data.map(pr => pr.id)
-                        : (await axios.get(`${XCOM_URL}/goods/get/all`)).data.map(pr => pr.id)
+                const productIds = []
+                if (!['Все', -1].includes(region)) {
+                    const response = await axios.get(`${XCOM_URL}/goods`, { params: { region } })
+                    productIds.push(...response.data.data.map(pr => pr.id))
+                } else {
+                    const response = await axios.get(`${XCOM_URL}/goods/get/all`)
+                    productIds.push(...response.data.map(pr => pr.id))
+                }
                 commit(PRODUCTS_SUCCESS, productIds)
                 resolve(productIds)
             } catch (err) {
