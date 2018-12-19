@@ -56,6 +56,7 @@ export default {
                                 new Set(
                                     val.slice(0, val.length - 1).concat(
                                         val[val.length - 1]
+                                            .toString()
                                             .split(' ')
                                             .map(v => parseInt(v, 10))
                                             .filter(v => !isNaN(v))
