@@ -86,6 +86,8 @@ const actions = {
                 const params = {}
                 if (!['Все', -1].includes(region)) {
                     params.region = region
+                } else {
+                    params.region = 77
                 }
                 const response = await axios.get(`${XCOM_URL}/goods`, { params })
                 const productIds = response.data.data.map(pr => pr.id)
