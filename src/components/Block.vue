@@ -16,12 +16,12 @@
             <strong>{{ region }}</strong>
           </v-chip>
         </v-card-text>
-        <v-card-text>
+        <!-- <v-card-text>
           {{ $vuetify.t('$vuetify.store') }}:
           <v-chip selected>
             <strong>{{ storeId }}</strong>
           </v-chip>
-        </v-card-text>
+        </v-card-text>-->
         <v-card-text>
           {{ $vuetify.t('$vuetify.products') }}:
           <v-chip selected :key="id" v-for="id in productIds">

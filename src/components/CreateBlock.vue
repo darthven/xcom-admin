@@ -21,7 +21,7 @@
               @blur="$v.title.$touch()"
             ></v-text-field>
             <region v-on:regionUpdated="onRegionUpdated"></region>
-            <store v-on:storeUpdated="onStoreUpdated"></store>
+            <!-- <store v-on:storeUpdated="onStoreUpdated"></store> -->
             <products v-on:productsUpdated="onProductsUpdated"></products>
             <v-checkbox :label="$vuetify.t('$vuetify.active')" v-model="active"></v-checkbox>
           </v-form>
