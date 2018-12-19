@@ -44,9 +44,29 @@ export default {
                 return this.$store.getters.selectedProducts
             },
             set(val) {
-                this.$store.dispatch(SELECT_PRODUCTS, val.toString().split(',')).then(res => {
-                    this.$emit('productsUpdated', res)
-                })
+                if (val.length === 0) {
+                    this.$store.dispatch(SELECT_PRODUCTS, []).then(res => {
+                        this.$emit('productsUpdated', res)
+                    })
+                } else {
+                    this.$store
+                        .dispatch(
+                            SELECT_PRODUCTS,
+                            Array.from(
+                                new Set(
+                                    val.slice(0, val.length - 1).concat(
+                                        val[val.length - 1]
+                                            .split(' ')
+                                            .map(v => parseInt(v, 10))
+                                            .filter(v => !isNaN(v))
+                                    )
+                                )
+                            )
+                        )
+                        .then(res => {
+                            this.$emit('productsUpdated', res)
+                        })
+                }
             }
         }
     },
