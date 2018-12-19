@@ -1,32 +1,31 @@
 <template>
-    <v-content>
-        <v-container fluid fill-height>
-            <v-layout justify-center align-center>  
-                <v-container> 
-                    <div v-if="banners.length > 0">
-                        <banner
-                            v-for="(item, index) in banners"
-                            :item="item"
-                            :index="index"
-                            :key="item._id"
-                            :_id="item._id"
-                            :title="item.title"
-                            :body="item.body"
-                            :image="item.image"
-                            :startDate="new Date(item.startDate)"
-                            :endDate="new Date(item.endDate)"
-                            :productIds="item.productIds"
-                            :show="item.show"
-                            v-on:bannersUpdated="onBannersUpdated"
-                        ></banner>
-                    </div>
-                    <div v-else class="empty">
-                        {{ $vuetify.t('$vuetify.noData') }}
-                    </div>
-                </v-container>
-            </v-layout>
+  <v-content>
+    <v-container fluid fill-height>
+      <v-layout justify-center align-center>
+        <v-container>
+          <div v-if="banners.length > 0">
+            <banner
+              v-for="(item, index) in banners"
+              :item="item"
+              :index="index"
+              :key="item._id"
+              :_id="item._id"
+              :title="item.title"
+              :body="item.body"
+              :image="item.image"
+              :startDate="new Date(item.startDate)"
+              :endDate="new Date(item.endDate)"
+              :regionId="item.regionId"
+              :productIds="item.productIds"
+              :show="item.show"
+              v-on:bannersUpdated="onBannersUpdated"
+            ></banner>
+          </div>
+          <div v-else class="empty">{{ $vuetify.t('$vuetify.noData') }}</div>
         </v-container>
-    </v-content>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
